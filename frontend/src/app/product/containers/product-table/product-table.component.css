@@ -1,0 +1,73 @@
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #f6f6f6;
+  height: 75vh;
+}
+
+.loading-label {
+  margin-top: 1rem;
+}
+
+.table-row:hover {
+  cursor: pointer;
+  background: #f0f0f0;
+}
+
+.header-cell,
+.page-name {
+  text-transform: capitalize;
+}
+
+.no-data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #fafafa;
+  padding: 5rem;
+  height: 75vh;
+}
+
+.product-table {
+  background-color: #f6f6f6;
+}
+
+.add-row-button {
+  position: absolute;
+  right: 0;
+  top: 140px;
+  z-index: 1000;
+}
+
+.edit-row-icon:hover {
+  cursor: pointer;
+}
+
+
+
+.table {
+  background: #f6f6f6;
+  border-radius: 2rem;
+}
+
+.add mat-icon{
+  width: 32px;
+  height: 32px;
+}
+
+:host ::ng-deep .mat-tab-body{
+  padding: 0 1rem !important;
+}
+
+.mat-paginator{
+  background: #f6f6f6;
+}
+
+.inline-edit-input {
+  border: none;
+  border-bottom: 1px solid;
+  background: transparent;
+}

@@ -1,0 +1,511 @@
+<ng-container *ngIf="counts">
+  <div class="container-fluid p-0">
+    <div class="row">
+      <div
+        *ngIf="!isProcessingTeam"
+        class="
+          col-3 col-md-3 col-sm-12
+          p-0
+          mart-product
+          d-flex
+          align-items-center
+          flex-column
+        "
+      >
+        <div class="text-center mb-4">
+          <div class="title" (click)="onChangeTable(productType.MART)">
+            <h3
+              class="content-title mb-0 fw-bold mart-title"
+              [ngClass]="{ 'active-title': isSelectMart }"
+            >
+              {{ "orderPage.mart" | transloco }}
+            </h3>
+          </div>
+        </div>
+
+        <div class="">
+          <div class="d-flex align-items-center">
+            <div class="product-middle">
+              <div class="step">
+                <div>
+                  <div
+                    class="step-content new-order"
+                    (click)="filterTable(productType.MART, productStatus.NEW)"
+                    [ngClass]="{
+                      selected:
+                        isSelectMart && selectedStatus === productStatus.NEW
+                    }"
+                  >
+                    <h6 class="step-title">
+                      {{ "orderPage.newOrders" | transloco }}
+                    </h6>
+                    <div
+                      class="step-icon mt-3"
+                      matBadge="{{ counts.mart?.new | filterCount }}"
+                      matBadgeColor="primary"
+                    >
+                      <img
+                        class="icon"
+                        src="assets/icons/new-order-icon.png"
+                        alt="new order icon"
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    class="step-content new-order"
+                    (click)="filterTable(productType.MART, productStatus.TODAY)"
+                    [ngClass]="{
+                      selected:
+                        isSelectMart && selectedStatus === productStatus.TODAY
+                    }"
+                  >
+                    <h6 class="step-title">
+                      {{ "orderPage.today" | transloco }}
+                    </h6>
+                    <div
+                      class="step-icon mt-3"
+                      matBadge="{{ counts.mart?.today | filterCount }}"
+                      matBadgeColor="primary"
+                    >
+                      <img
+                        class="icon"
+                        src="assets/icons/new-order-icon.png"
+                        alt="new order icon"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="step mt-3">
+                <div
+                  class="step-content"
+                  (click)="filterTable(productType.MART, productStatus.KEEP)"
+                  [ngClass]="{
+                    selected:
+                      isSelectMart && selectedStatus === productStatus.KEEP
+                  }"
+                >
+                  <h6 class="step-title">
+                    {{ "orderPage.ordersToKeep" | transloco }}
+                  </h6>
+                  <div
+                    class="step-icon mt-3"
+                    matBadge="{{ counts.mart?.keep | filterCount }}"
+                    matBadgeColor="primary"
+                  >
+                    <img
+                      class="icon"
+                      src="assets/icons/order-to-keep-icon.png"
+                      alt="order to keep icon"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <mat-icon class="navigate-icon">navigate_next</mat-icon>
+
+            <div class="step">
+              <div
+                class="step-content"
+                (click)="filterTable(productType.MART, productStatus.COMPLETE)"
+                [ngClass]="{
+                  selected:
+                    isSelectMart && selectedStatus === productStatus.COMPLETE
+                }"
+              >
+                <h6 class="step-title">
+                  {{ "orderPage.ordersCompleted" | transloco }}
+                </h6>
+                <div
+                  class="step-icon mt-3"
+                  matBadge="{{ counts.mart?.complete | filterCount }}"
+                  matBadgeColor="primary"
+                >
+                  <img
+                    class="icon"
+                    src="assets/icons/order-completed-icon.png"
+                    alt="order completed icon"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="
+          col-5 col-md-5 col-sm-12
+          p-0
+          restaurant-product
+          d-flex
+          align-items-center
+          flex-column
+        "
+      >
+        <div class="custom">
+          <div class="mb-4 text-center">
+            <div
+              class="title flex-column"
+              (click)="onChangeTable(productType.RESTAURANT)"
+            >
+              <h3
+                class="content-title mb-0 ms-n5 fw-bold restaurant-title"
+                [ngClass]="{ 'active-title': isSelectRestaurant }"
+              >
+                {{ "orderPage.restaurant" | transloco }}
+              </h3>
+            </div>
+          </div>
+
+          <div class="">
+            <div class="d-flex align-items-center">
+              <div *ngIf="!isProcessingTeam" class="step">
+                <div>
+                  <div
+                    class="step-content new-order"
+                    (click)="
+                      filterTable(productType.RESTAURANT, productStatus.NEW)
+                    "
+                    [ngClass]="{
+                      selected:
+                        isSelectRestaurant &&
+                        selectedStatus === productStatus.NEW
+                    }"
+                  >
+                    <h6 class="step-title">
+                      {{ "orderPage.newOrders" | transloco }}
+                    </h6>
+                    <div
+                      class="step-icon mt-3"
+                      matBadge="{{ counts.restaurant?.new | filterCount }}"
+                      matBadgeColor="primary"
+                    >
+                      <img
+                        class="icon"
+                        src="assets/icons/new-order-icon.png"
+                        alt="new order icon"
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    class="step-content new-order"
+                    (click)="
+                      filterTable(productType.RESTAURANT, productStatus.TODAY)
+                    "
+                    [ngClass]="{
+                      selected:
+                        isSelectRestaurant &&
+                        selectedStatus === productStatus.TODAY
+                    }"
+                  >
+                    <h6 class="step-title">
+                      {{ "orderPage.today" | transloco }}
+                    </h6>
+                    <div
+                      class="step-icon mt-3"
+                      matBadge="{{ counts.restaurant?.today | filterCount }}"
+                      matBadgeColor="primary"
+                    >
+                      <img
+                        class="icon"
+                        src="assets/icons/new-order-icon.png"
+                        alt="new order icon"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <mat-icon *ngIf="!isProcessingTeam" class="navigate-icon"
+                >navigate_next</mat-icon
+              >
+
+              <div class="product-middle">
+                <div *ngIf="!isProcessingTeam" class="step">
+                  <div
+                    class="step-content"
+                    (click)="
+                      filterTable(
+                        productType.RESTAURANT,
+                        productStatus.INCOMPLETE
+                      )
+                    "
+                    [ngClass]="{
+                      selected:
+                        isSelectRestaurant &&
+                        selectedStatus === productStatus.INCOMPLETE
+                    }"
+                  >
+                    <h6 class="step-title">
+                      {{ "orderPage.ordersIncomplete" | transloco }}
+                    </h6>
+                    <div
+                      class="step-icon mt-3"
+                      matBadge="{{
+                        counts.restaurant?.incomplete | filterCount
+                      }}"
+                      matBadgeColor="primary"
+                    >
+                      <img
+                        class="icon"
+                        src="assets/icons/order-incomplete-icon.png"
+                        alt="order incomplete icon"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div  [ngClass]="{'processing-team': isProcessingTeam}" class="step mt-3">
+                  <div
+                    class="step-content"
+                    (click)="
+                      filterTable(
+                        productType.RESTAURANT,
+                        productStatus.PROCESSING
+                      )
+                    "
+                    [ngClass]="{
+                      selected:
+                        isSelectRestaurant &&
+                        selectedStatus === productStatus.PROCESSING
+                    }"
+                  >
+                    <h6 class="step-title">
+                      {{ "orderPage.processingTeam" | transloco }}
+                    </h6>
+                    <div
+                      class="step-icon mt-3"
+                      matBadge="{{
+                        counts.restaurant?.processing | filterCount
+                      }}"
+                      matBadgeColor="primary"
+                    >
+                      <img
+                        class="icon"
+                        src="assets/icons/processing-team-icon.png"
+                        alt="processing team icon"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <mat-icon class="navigate-icon">navigate_next</mat-icon>
+
+              <div class="step">
+                <div
+                  class="step-content"
+                  (click)="
+                    filterTable(productType.RESTAURANT, productStatus.COMPLETE)
+                  "
+                  [ngClass]="{
+                    selected:
+                      isSelectRestaurant &&
+                      selectedStatus === productStatus.COMPLETE
+                  }"
+                >
+                  <h6 class="step-title">
+                    {{ "orderPage.ordersCompleted" | transloco }}
+                  </h6>
+                  <div
+                    class="step-icon mt-3"
+                    matBadge="{{ counts.restaurant?.complete | filterCount }}"
+                    matBadgeColor="primary"
+                  >
+                    <img
+                      class="icon"
+                      src="assets/icons/order-completed-icon.png"
+                      alt="order completed icon"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="
+          col-4 col-md-4 col-sm-12
+          p-0
+          butcher-product
+          d-flex
+          align-items-center
+          flex-column
+        "
+      >
+        <div class="custom">
+          <div class="mb-4 text-center">
+            <div
+              class="title flex-column"
+              (click)="onChangeTable(productType.BUTCHER)"
+            >
+              <h3
+                class="content-title ms-n5 mb-0 fw-bold restaurant-title"
+                [ngClass]="{ 'active-title': isSelectButcher }"
+              >
+                {{ "orderPage.butcher" | transloco }}
+              </h3>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center">
+            <div class="step">
+              <div *ngIf="!isProcessingTeam">
+                <div
+                  class="step-content new-order"
+                  (click)="filterTable(productType.BUTCHER, productStatus.NEW)"
+                  [ngClass]="{
+                    selected:
+                      isSelectButcher && selectedStatus === productStatus.NEW
+                  }"
+                >
+                  <h6 class="step-title">
+                    {{ "orderPage.newOrders" | transloco }}
+                  </h6>
+                  <div
+                    class="step-icon mt-3"
+                    matBadge="{{ counts.butcher?.new | filterCount }}"
+                    matBadgeColor="primary"
+                  >
+                    <img
+                      class="icon"
+                      src="assets/icons/new-order-icon.png"
+                      alt="new order icon"
+                    />
+                  </div>
+                </div>
+
+                <div
+                  class="step-content new-order"
+                  (click)="
+                    filterTable(productType.BUTCHER, productStatus.TODAY)
+                  "
+                  [ngClass]="{
+                    selected:
+                      isSelectButcher && selectedStatus === productStatus.TODAY
+                  }"
+                >
+                  <h6 class="step-title">
+                    {{ "orderPage.today" | transloco }}
+                  </h6>
+                  <div
+                    class="step-icon mt-3"
+                    matBadge="{{ counts.butcher?.today | filterCount }}"
+                    matBadgeColor="primary"
+                  >
+                    <img
+                      class="icon"
+                      src="assets/icons/new-order-icon.png"
+                      alt="new order icon"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <mat-icon *ngIf="!isProcessingTeam" class="navigate-icon"
+              >navigate_next</mat-icon
+            >
+
+            <div class="product-middle">
+              <div *ngIf="!isProcessingTeam" class="step">
+                <div
+                  class="step-content"
+                  (click)="
+                    filterTable(productType.BUTCHER, productStatus.INCOMPLETE)
+                  "
+                  [ngClass]="{
+                    selected:
+                      isSelectButcher &&
+                      selectedStatus === productStatus.INCOMPLETE
+                  }"
+                >
+                  <h6 class="step-title">
+                    {{ "orderPage.ordersIncomplete" | transloco }}
+                  </h6>
+                  <div
+                    class="step-icon mt-3"
+                    matBadge="{{ counts.butcher?.incomplete | filterCount }}"
+                    matBadgeColor="primary"
+                  >
+                    <img
+                      class="icon"
+                      src="assets/icons/order-incomplete-icon.png"
+                      alt="order incomplete icon"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div  [ngClass]="{'processing-team': isProcessingTeam}"  class="step mt-3">
+                <div
+                  class="step-content"
+                  (click)="
+                    filterTable(productType.BUTCHER, productStatus.PROCESSING)
+                  "
+                  [ngClass]="{
+                    selected:
+                      isSelectButcher &&
+                      selectedStatus === productStatus.PROCESSING
+                  }"
+                >
+                  <h6 class="step-title">
+                    {{ "orderPage.processingTeam" | transloco }}
+                  </h6>
+                  <div
+                    class="step-icon mt-3"
+                    matBadge="{{ counts.butcher?.incomplete | filterCount }}"
+                    matBadgeColor="primary"
+                  >
+                    <img
+                      class="icon"
+                      src="assets/icons/processing-team-icon.png"
+                      alt="processing team icon"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <mat-icon class="navigate-icon">navigate_next</mat-icon>
+
+            <div class="step">
+              <div
+                class="step-content"
+                (click)="
+                  filterTable(productType.BUTCHER, productStatus.COMPLETE)
+                "
+                [ngClass]="{
+                  selected:
+                    isSelectButcher && selectedStatus === productStatus.COMPLETE
+                }"
+              >
+                <h6 class="step-title">
+                  {{ "orderPage.ordersCompleted" | transloco }}
+                </h6>
+                <div
+                  class="step-icon mt-3"
+                  matBadge="{{ counts.butcher?.complete | filterCount }}"
+                  matBadgeColor="primary"
+                >
+                  <img
+                    class="icon"
+                    src="assets/icons/order-completed-icon.png"
+                    alt="order completed icon"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

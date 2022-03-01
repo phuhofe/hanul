@@ -1,0 +1,262 @@
+<mat-tab-group
+  [selectedIndex]="selected.value"
+  (selectedIndexChange)="onSelectTabIndex($event)"
+>
+  <mat-tab label="{{ 'orderPage.main' | transloco }}">
+    <div class="order py-4 px-3">
+      <div>
+        <app-order-filer-table
+          [counts]="counts"
+          [isProcessingTeam]="isProcessingTeam"
+          (tableType)="onChangeTableType($event)"
+          (filter)="onFilterTable($event)"
+        >
+        </app-order-filer-table>
+
+        <!-- 
+          New version 
+        <app-order-numbers></app-order-numbers>
+        <app-order-filter class="mt-3"></app-order-filter>   -->
+      </div>
+
+      <div class="mt-4">
+        <div>
+          <app-order-search
+            [productType]="tableType"
+            (print)="onPrint()"
+            (updateStatus)="onUpdateStatus()"
+            (exportCSV)="onExportCSV()"
+            (add)="onAddProductTab()"
+            (search)="onSearch($event)"
+          >
+          </app-order-search>
+        </div>
+
+        <div
+          *ngIf="notAbleToPrint"
+          class="alert alert-warning my-3"
+          role="alert"
+        >
+          {{ "orderPage.notAbleToPrint" | transloco }}
+        </div>
+
+        <div class="table mt-2">
+          <app-mart-product
+            (edit)="onEditProductTab($event)"
+            (updateStatus)="onUpdateOrderStatus($event)"
+            (delete)="deleteProduct($event)"
+            (print)="printProduct($event)"
+            (checkboxSelection)="onCheckboxSelect($event)"
+            [productType]="tableType"
+            [status]="statusType"
+            [searchParam]="searchParam"
+            [searchCustomerParam]="searchCustomerParam"
+          >
+          </app-mart-product>
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab
+    *ngFor="let tab of tabs; let index = index"
+    label="{{ 'orderPage.' + tab.label | transloco }}"
+  >
+    <ng-template mat-tab-label>
+      <div class="tab-label">
+        <span class="text-capitalize">
+          {{ "orderPage." + tab.label | transloco }}
+        </span>
+
+        <button mat-icon-button (click)="closeTab(index)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </ng-template>
+
+    <app-mart-product-action
+      *ngIf="tab.action !== 'print'"
+      (addMartProduct)="addProduct($event)"
+      (updatingForm)="onUpdatingTab($event, index)"
+      (editMartProduct)="editProduct($event)"
+      (close)="closeTab(index)"
+      [data]="tab.data ?? null"
+      [action]="tab.action"
+    >
+    </app-mart-product-action>
+
+    <app-print-test *ngIf="tab.action === 'print'" [orders]="tab.data">
+    </app-print-test>
+  </mat-tab>
+</mat-tab-group>
+
+<div id="orders" style="visibility: hidden; height: 0">
+  <ng-container *ngFor="let order of orders; let i = index">
+    <div class="container" style="width: 280mm; height: 300mm">
+     
+      <img
+        src="assets/images/Receipt_V2_1.png"
+        id="imageOrder"
+        style="width: 280mm; height: 300mm"
+        class="image-test"
+        alt=""
+      />
+
+      <div class="receipt-wrapper" id="bill-{{ i }}">
+        <div class="data" style="height: 5rem">
+          <p class="year" style="width: 2rem">
+            {{ order.created | date: "YYYY" }}
+          </p>
+          <p class="month" style="width: 2rem">
+            {{ order.created | date: "mm" }}
+          </p>
+          <p class="date" style="width: 2rem">
+            {{ order.created | date: "dd" }}
+          </p>
+          <p class="orderNo" style="width: 2rem">{{ order.order_no }}</p>
+        </div>
+
+        <div class="business" style="height: 5.25rem">
+          <p class="businessNo" style="width: 6rem">
+            {{ order.business_no }}
+          </p>
+          <p class="ownerName" style="width: 8rem">
+            {{ order.customer.owner_name }}
+          </p>
+          <p class="phoneNumber" style="width: 8rem">
+            {{ order.customer.mobile_no }}
+          </p>
+          <p class="faxNumber" style="width: 8rem">
+            {{ order.customer.phone_no }}
+          </p>
+          <p class="businessName" style="width: 10rem">
+            {{ order.customer.business_name }}
+          </p>
+          <p class="businessAddress" style="width: 12rem">
+            {{ order.customer.business_address }}
+          </p>
+          <p class="businessType" style="width: 8rem">
+            {{ order.customer.business_type }}
+          </p>
+          <p class="businessCategory" style="width: 8rem">
+            {{ order.customer.business_category }}
+          </p>
+        </div>
+
+        <div style="height: 27.5rem">
+          <div
+            class="order-units"
+            *ngFor="let orderUnit of order.order_units; let i = index"
+            style="height: 1.5rem"
+          >
+            <div class="first-col row-{{ i }}" style="width: 6rem">
+              <div>{{ orderUnit.app_name ?? "--" }}</div>
+            </div>
+
+            <div class="first-col row-{{ i }} locality" style="width: 6rem">
+              {{ orderUnit.locality ?? "locality" }}
+            </div>
+
+            <div class="first-col row-{{ i }} quantity" style="width: 6rem">
+              {{ orderUnit.quantity ?? "quantity" }}
+            </div>
+
+            <div class="second-col row-{{ i }}" style="width: 6rem">
+              {{ orderUnit.price ?? "-" }}
+            </div>
+
+            <div class="third-col row-{{ i }}" style="width: 6rem">
+              {{ orderUnit.price * orderUnit.quantity }}
+            </div>
+
+            <div class="fifth-col row-{{ i }} serialNo" style="width: 6rem">
+              {{ orderUnit.serial_no ?? "null" }}
+            </div>
+
+            <div class="fifth-col row-{{ i }} blNo" style="width: 6rem">
+              {{ orderUnit.bl_no ?? "null" }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="receipt-wrapper-2" id="bill-page2-{{ i }}">
+        <div class="data-2" style="height: 2.5rem">
+          <p class="year-2" style="width: 2rem">
+            {{ order.created | date: "YYYY" }}
+          </p>
+          <p class="month-2" style="width: 2rem">
+            {{ order.created | date: "mm" }}
+          </p>
+          <p class="date-2" style="width: 2rem">
+            {{ order.created | date: "dd" }}
+          </p>
+          <p class="orderNo-2" style="width: 2rem">{{ order.order_no }}</p>
+        </div>
+
+        <div class="business-2" style="height: 5.25rem">
+          <p class="business-number" style="width: 6rem">
+            {{ order.business_no }}
+          </p>
+
+          <p class="ownerName-2" style="width: 8rem">
+            {{ order.customer.owner_name }}
+          </p>
+          <p class="phoneNumber-2" style="width: 8rem">
+            {{ order.customer.mobile_no }}
+          </p>
+          <p class="faxNumber-2" style="width: 8rem">
+            {{ order.customer.phone_no }}
+          </p>
+
+          <p class="businessName-2" style="width: 8rem">
+            {{ order.customer.business_name }}
+          </p>
+          <p class="businessAddress-2" style="width: 12rem">
+            {{ order.customer.business_address }}
+          </p>
+          <p class="businessType-2" style="width: 8rem">
+            {{ order.customer.business_type }}
+          </p>
+          <p class="businessCategory-2" style="width: 8rem">
+            {{ order.customer.business_category }}
+          </p>
+        </div>
+
+        <div
+          class="order-units-2"
+          *ngFor="let orderUnit of order.order_units; let i = index"
+          style="height: 1.5rem"
+        >
+          <div class="first-col-2 row-{{ i }} app-name" style="width: 6rem">
+            <div>{{ orderUnit.app_name ?? "--" }}</div>
+          </div>
+
+          <div class="first-col-2 row-{{ i }} locality" style="width: 6rem">
+            {{ orderUnit.locality ?? "locality" }}
+          </div>
+
+          <div class="first-col-2 row-{{ i }} quantity" style="width: 6rem">
+            {{ orderUnit.quantity ?? "quantity" }}
+          </div>
+
+          <div class="second-col-2 row-{{ i }}" style="width: 6rem">
+            {{ orderUnit.price ?? "--" }}
+          </div>
+
+          <div class="third-col-2 row-{{ i }}" style="width: 6rem">
+            {{ orderUnit.price * orderUnit.quantity }}
+          </div>
+
+          <div class="fifth-col-2 row-{{ i }} serialNo" style="width: 6rem">
+            {{ orderUnit.serial_no ?? "null" }}
+          </div>
+
+          <div class="fifth-col-2 row-{{ i }} blNo" style="width: 6rem">
+            {{ orderUnit.bl_no ?? "null" }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

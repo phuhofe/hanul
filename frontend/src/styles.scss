@@ -1,0 +1,151 @@
+@font-face {
+  font-family: "Readex Pro";
+  src: url("./assets/fonts/ReadexPro-Light.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Readex Pro Bold";
+  src: url("./assets/fonts/ReadexPro-bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Readex Pro Medium";
+  src: url("./assets/fonts/ReadexPro-Medium.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+h1 {
+  font-family: Readex Pro, Helvetica, sans-serif;
+  font-size: 250%;
+}
+
+h2,
+h3 {
+  font-family: Readex Pro, Helvetica, sans-serif;
+  font-weight: lighter;
+}
+
+body {
+  margin: 2em;
+}
+
+body,
+input[type="text"],
+button {
+  font-family: Readex Pro, Georgia, serif;
+}
+
+* {
+  font-family: Readex Pro, Helvetica, sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Readex Pro, "Readex Pro", sans-serif;
+}
+
+th,
+.mat-header-cell {
+  font-family: Readex Pro Medium, "Readex Pro Medium", sans-serif;
+  font-size: 0.9rem !important;
+  font-weight: bold !important;
+}
+
+.mat-sort-header-content {
+  font-family: Readex Pro Medium, "Readex Pro Medium", sans-serif;
+  font-size: 0.9rem !important;
+  font-weight: bold !important;
+}
+
+.expanded-table-border {
+  border: 2px solid var(--hanul-primary);
+  border-top: 0;
+}
+
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url(https://fonts.gstatic.com/s/materialicons/v70/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2)
+    format("woff2");
+}
+
+.material-icons {
+  font-family: "Material Icons";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: "liga";
+  -webkit-font-smoothing: antialiased;
+}
+
+tr:hover {
+  cursor: pointer;
+  background: #f0f0f0;
+}
+
+.selected-row {
+  background: #f68383 !important;
+}
+
+.cell-input {
+  width: 50px;
+}
+
+.cell-input-sm {
+  width: 50px;
+}
+
+.cell-input-md {
+  width: 80px;
+}
+
+.cell-input-lg {
+  width: 120px;
+}
+
+.mat-menu-panel {
+  border: 1px solid var(--hanul-primary);
+  box-shadow: none !important;
+  min-width: 150px !important;
+  background: #ffffff !important;
+}
+
+.mat-menu-content {
+  padding: 0 !important;
+}
+
+.mat-menu-item:hover {
+  background: var(--hanul-primary) !important;
+}
+
+.mat-menu-item-submenu-trigger:hover::after {
+  color: #ffffff !important;
+}
+
+.inline-edit-input {
+  border: none;
+  border-bottom: 1px solid;
+  background: transparent;
+}
+
+@import "./styles/hanul-theme";
+@import "./styles/variables";

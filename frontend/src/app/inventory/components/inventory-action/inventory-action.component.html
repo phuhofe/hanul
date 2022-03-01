@@ -1,0 +1,119 @@
+<form [formGroup]="inventoryForm" class="product-form p-4">
+  <app-tab-layout>
+    <div title>{{ action }} {{ pageName }}</div>
+    <div closeDialog>
+      <button mat-icon-button (click)="closeDialog()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div main>
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field appearance="legacy">
+            <mat-label>
+              {{ "inventoryPage.table.sku" | transloco }}
+            </mat-label>
+            <input matInput formControlName="sku" />
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy">
+            <mat-label>
+              {{ "inventoryPage.table.supplier" | transloco }}
+            </mat-label>
+            <input matInput formControlName="supplier" />
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy">
+            <mat-label>
+              {{ "inventoryPage.table.notes" | transloco }}
+            </mat-label>
+            <textarea matInput formControlName="notes"></textarea>
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field appearance="legacy">
+            <mat-label>{{ "inventoryPage.table.date" | transloco }}</mat-label>
+            <input matInput [matDatepicker]="date" formControlName="date" />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="date"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #date></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy">
+            <mat-label>{{ "inventoryPage.table.date_bought" | transloco }}</mat-label>
+            <input matInput [matDatepicker]="date_bought" formControlName="date_bought" />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="date_bought"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #date_bought></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy">
+            <mat-label
+              >{{ "inventoryPage.table.stock_boxes" | transloco }}
+            </mat-label>
+            <input matInput formControlName="stock_boxes" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+          <mat-form-field appearance="legacy">
+            <mat-label>{{
+              "inventoryPage.table.stock_id" | transloco
+            }}</mat-label>
+            <input matInput formControlName="stock_id" />
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy">
+            <mat-label>{{
+              "inventoryPage.table.serial_no" | transloco
+            }}</mat-label>
+            <input matInput formControlName="serial_no" />
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy">
+            <mat-label
+              >{{ "inventoryPage.table.stock_kg" | transloco }}
+            </mat-label>
+            <input matInput formControlName="stock_kg" />
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div action>
+      <button
+        *ngIf="action === 'edit'"
+        mat-flat-button
+        color="primary"
+        class="text-capitalize mx-2"
+        (click)="doAction()"
+      >
+        <mat-icon>save</mat-icon>{{ "inventoryPage.save" | transloco }}
+      </button>
+      <button
+        *ngIf="action === 'add'"
+        mat-flat-button
+        color="primary"
+        class="text-capitalize mx-2"
+        (click)="doAction()"
+      >
+        <mat-icon>add</mat-icon>{{ "inventoryPage.add" | transloco }}
+      </button>
+
+      <!-- <button
+        mat-flat-button
+        color="primary"
+        class="text-capitalize mx-2"
+        (click)="resetAll()"
+        *ngIf="action === 'edit'"
+      >
+        <mat-icon>restart_alt</mat-icon>{{"inventoryPage.resetAll" | transloco }}
+      </button> -->
+    </div>
+  </app-tab-layout>
+</form>

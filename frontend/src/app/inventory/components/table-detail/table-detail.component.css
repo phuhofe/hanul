@@ -1,0 +1,15 @@
+input {
+  width: 75px;
+}
+
+th {
+  font-weight: bold;
+}
+
+::ng-deep.action-header .mat-sort-header-container {
+  justify-content: center;
+}
+
+.table-component {
+  overflow-x: auto;
+}

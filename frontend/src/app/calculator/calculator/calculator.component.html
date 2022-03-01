@@ -1,0 +1,116 @@
+<div class="calculator-container mat-elevation-z8">
+
+  <mat-form-field class="w-100">
+    <mat-label>{{ "calculator.counting" | transloco }}</mat-label>
+    <input style="font-size: 1.5rem" matInput [ngModel]="formattedTokens" readonly>
+  </mat-form-field>
+
+  <mat-form-field class="w-100">
+    <mat-label>{{ "calculator.result" | transloco }}</mat-label>
+    <input style="font-size: 3rem" matInput [ngModel]="input" readonly>
+  </mat-form-field>
+
+  <div class="row mt-3">
+    <div class="col-3">
+      <button mat-flat-button color="primary" (click)="reset()">{{ "calculator.ac" | transloco }}</button>
+    </div>
+    <div class="col-3">
+      <button style="font-size: 1.25rem;" mat-flat-button color="accent" (click)="execOperator('(')">
+        (
+      </button>
+    </div>
+    <div class="col-3">
+      <button style="font-size: 1.25rem;" mat-flat-button color="accent" (click)="execOperator(')')">
+        )
+      </button>
+    </div>
+    <div class="col-3">
+      <button style="font-size: 1.25rem;" mat-flat-button color="accent" (click)="execOperator('/')">
+        /
+      </button>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-3">
+      <button mat-flat-button color="primary" (click)="insertChar('1')">
+        1
+      </button>
+    </div>
+    <div class="col-3">
+      <button mat-flat-button color="primary" (click)="insertChar('2')">
+        2
+      </button>
+    </div>
+    <div class="col-3">
+      <button mat-flat-button color="primary" (click)="insertChar('3')">
+        3
+      </button>
+    </div>
+    <div class="col-3">
+      <button style="font-size: 1.25rem;" mat-flat-button color="accent" (click)="execOperator('*')">
+        x
+      </button>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-3">
+      <button mat-flat-button color="primary" (click)="insertChar('4')">
+        4
+      </button>
+    </div>
+    <div class="col-3">
+      <button mat-flat-button color="primary" (click)="insertChar('5')">
+        5
+      </button>
+    </div>
+    <div class="col-3">
+      <button mat-flat-button color="primary" (click)="insertChar('6')">
+        6
+      </button>
+    </div>
+    <div class="col-3">
+      <button style="font-size: 1.25rem;" mat-flat-button color="accent" (click)="execOperator('+')">
+        +
+      </button>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-3">
+      <button  mat-flat-button color="primary" (click)="insertChar('7')">
+        7
+      </button>
+    </div>
+    <div class="col-3">
+      <button  mat-flat-button color="primary" (click)="insertChar('8')">
+        8
+      </button>
+    </div>
+    <div class="col-3">
+      <button  mat-flat-button color="primary" (click)="insertChar('9')">
+        9
+      </button>
+    </div>
+    <div class="col-3">
+      <button style="font-size: 1.25rem;" mat-flat-button color="accent" (click)="execOperator('-')">
+        -
+      </button>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-6 pe-0">
+      <button class="w-100" mat-flat-button color="primary" (click)="insertChar('0')">
+        0
+      </button>
+    </div>
+    <div class="col-3">
+      <button style="font-size: 1.25rem;" mat-flat-button color="primary" (click)="insertChar('.')">
+        ,
+      </button>
+    </div>
+    <div class="col-3">
+      <button style="font-size: 1.25rem;" autofocus mat-flat-button color="accent" (click)="evaluate()">
+        =
+      </button>
+    </div>
+  </div>
+</div>

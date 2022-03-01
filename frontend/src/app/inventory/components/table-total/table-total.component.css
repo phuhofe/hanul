@@ -1,0 +1,25 @@
+.select-header,
+.select-cell {
+  max-width: 50px;
+}
+
+input {
+  width: 75px;
+}
+
+th {
+  font-weight: bold;
+}
+
+tr:hover {
+  cursor: pointer;
+  background: #f0f0f0;
+}
+
+::ng-deep.action-header .mat-sort-header-container {
+  justify-content: center;
+}
+
+.table-component {
+  overflow-x: auto;
+}

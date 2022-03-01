@@ -1,0 +1,17 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+@import './hanul-palettes';
+
+$accent:  mat-palette($mat-amber, A200, A100, A400);
+$warn:    mat-palette($mat-orange, 600);
+
+$hanul-theme: mat-light-theme((
+  color: (
+    primary: $hanul-palette-primary,
+    accent: $accent,
+    warn: $warn,  
+  )
+));
+
+@include angular-material-theme($hanul-theme);

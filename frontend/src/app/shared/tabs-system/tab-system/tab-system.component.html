@@ -1,0 +1,33 @@
+<mat-tab-group
+  [selectedIndex]="selected.value"
+  (selectedIndexChange)="onSelectTabIndex($event)"
+>
+  <mat-tab label="{{ 'orderPage.main' | transloco }}">
+    <ng-content select="[main-component]"></ng-content>
+  </mat-tab>
+
+  <mat-tab
+    *ngFor="let tab of tabs; let index = index"
+    label="{{ 'orderPage.' + tab.label | transloco }}"
+  >
+    <ng-template mat-tab-label>
+      <div class="tab-label">
+        <span class="text-capitalize">
+          {{ "orderPage." + tab.label | transloco }}
+        </span>
+
+        <button mat-icon-button (click)="closeTab(index)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </ng-template>
+
+    <ng-template
+      [ngTemplateOutlet]="templateRef"
+      [ngTemplateOutletContext]="{ $implicit: tab }"
+    >
+    </ng-template>
+
+    <ng-content select="[add-component]"> </ng-content>
+  </mat-tab>
+</mat-tab-group>

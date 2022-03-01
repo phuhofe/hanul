@@ -1,0 +1,126 @@
+<app-table-manager-search
+  [selectedTable]="selectedTable"
+  (searchParam)="onSearch($event)"
+  (add)="onAddCustomerTab($event)"
+></app-table-manager-search>
+
+<mat-progress-bar
+  *ngIf="isChangeType"
+  class="p-0"
+  color="primary"
+  [mode]="'indeterminate'"
+></mat-progress-bar>
+
+<div>
+  <mat-table
+    class="manager-table"
+    matSort
+    matSortDirection="asc"
+    multiTemplateDataRows
+    matSortDisableClear
+    [dataSource]="dataSource"
+    (matSortChange)="sortData($event)"
+  >
+    <ng-container *ngFor="let column of columns" [matColumnDef]="column">
+      <mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        class="header-cell fw-bold"
+      >
+          {{ "appManagerPage.table." + column | transloco | rowName }}
+      </mat-header-cell>
+
+      <mat-cell *matCellDef="let element">
+        <span *ngIf="column === 'created' || column === 'updated'; else other">
+          {{ element[column] | date: "dd/MM/yyyy HH:mm:ss" }}
+        </span>
+        <ng-template #other>
+          {{ element[column] }}
+        </ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="image">
+      <mat-cell
+        *matCellDef="let element"
+        [attr.colspan]="columnsToDisplay.length"
+      >
+        <div class="element-detail">
+          <p class="mb-3">{{ "appManagerPage.productImage" | transloco }}:</p>
+
+          <div class="d-flex">
+            <ng-container *ngIf="element.image; else noImage">
+              <ng-container *ngFor="let image of element.image">
+                <app-product-image
+                  class="mx-4"
+                  [imageSrc]="image"
+                ></app-product-image>
+              </ng-container>
+            </ng-container>
+
+            <ng-template #noImage>
+              <span class="ms-3">{{
+                "appManagerPage.noImage" | transloco
+              }}</span>
+            </ng-template>
+          </div>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container *ngIf="editable" matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef>{{
+        "appManagerPage.action" | transloco
+      }}</mat-header-cell>
+
+      <mat-cell *matCellDef="let product" class="action-link">
+        <button
+          mat-icon-button
+          color="primary"
+          aria-label="Edit row"
+          matTooltip="수정"
+          (click)="editCustomer(product)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button
+          mat-icon-button
+          color="warn"
+          aria-label="Delete row"
+          matTooltip="삭제"
+          (click)="onDelete(product.app_name)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row
+      *matHeaderRowDef="columnsToDisplay; sticky: true"
+    ></mat-header-row>
+
+    <mat-row
+      *matRowDef="let element; columns: columnsToDisplay"
+      class="table-row"
+    ></mat-row>
+
+    <mat-row
+      *matRowDef="let row; columns: ['image']"
+      class="detail-row"
+    ></mat-row>
+  </mat-table>
+
+  <div *ngIf="totalResult === 0" class="no-data">
+    No data
+  </div>
+
+  <mat-paginator
+    [length]="totalResult"
+    [pageSize]="20"
+    [pageSizeOptions]="[20, 50, 100]"
+    (page)="pageChange($event)"
+    showFirstLastButtons
+  >
+  </mat-paginator>
+</div>

@@ -1,0 +1,35 @@
+<div class="table-filter mt-4">
+  <form [formGroup]="form" (submit)="onSearch()">
+    <button mat-mini-fab class="me-4" color="primary">
+      <mat-icon> search </mat-icon>
+    </button>
+
+    <mat-form-field appearance="legacy">
+      <mat-label>{{ "orderPage.enterDateRange" | transloco }}</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input
+          matStartDate
+          formControlName="start_date"
+          placeholder="{{ 'inventoryPage.startDate' | transloco }}"
+        />
+        <input
+          matEndDate
+          formControlName="end_date"
+          #endDate
+          placeholder="{{ 'inventoryPage.endDate' | transloco }}"
+        />
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+
+      <mat-error
+        *ngIf="form.controls.start_date.hasError('matStartDateInvalid')"
+      >
+        {{ "orderPage.invalidStartDate" | transloco }}
+      </mat-error>
+      <mat-error *ngIf="form.controls.end_date.hasError('matEndDateInvalid')">
+        {{ "orderPage.invalidEndDate" | transloco }}
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>

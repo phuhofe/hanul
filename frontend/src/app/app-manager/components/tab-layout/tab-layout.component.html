@@ -1,0 +1,16 @@
+<div class="d-flex align-item-center justify-content-between mb-4">
+  <strong class="text-capitalize">
+    <ng-content select="[title]"></ng-content>
+  </strong>
+
+  <ng-content select="[closeDialog]"></ng-content>
+</div>
+
+<div class="main">
+  <ng-content select="[main]"></ng-content>
+</div>
+
+<div class="mt-3 d-flex justify-content-end">
+  <ng-content select="[action]"></ng-content>
+</div>
+

@@ -1,0 +1,52 @@
+<div>
+  <nav class="navbar navbar-light">
+    <div class="container-fluid">
+      <div class="navbar-brand text-white" (click)="sideNavChange()">
+        <button mat-icon-button>
+          <mat-icon svgIcon="hn-menu"></mat-icon>
+        </button>
+      </div>
+      <div class="notifications">
+        <div>
+          <button mat-flat-button color="primary" [matMenuTriggerFor]="menu">
+            <mat-icon>language</mat-icon> {{ currentLanguage }}
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="changeLanguage('en')">
+              English
+            </button>
+            <button mat-menu-item (click)="changeLanguage('ko')">Korea</button>
+          </mat-menu>
+        </div>
+
+        <div class="mx-4">
+          <button mat-icon-button [matMenuTriggerFor]="notification">
+            <mat-icon matBadge="15" matBadgeColor="warn" class="text-white">
+              notifications
+            </mat-icon>
+          </button>
+          <mat-menu #notification="matMenu">
+            <button mat-menu-item>
+              <mat-icon>dialpad</mat-icon>
+              <span>{{ "navbar.redial" | transloco }}</span>
+            </button>
+            <button mat-menu-item disabled>
+              <mat-icon>voicemail</mat-icon>
+              <span>{{ "navbar.checkVoiceMail" | transloco }}</span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon>notifications_off</mat-icon>
+              <span>{{ "navbar.disableAlerts" | transloco }}</span>
+            </button>
+          </mat-menu>
+        </div>
+
+        <div>
+          <button mat-flat-button (click)="logout()">
+            {{ "navbar.logout" | transloco }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>

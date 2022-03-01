@@ -1,0 +1,26 @@
+<div class="d-flex align-item-center justify-content-between mb-4">
+  <strong class="text-capitalize ps-4 pt-4">
+    {{ type }}
+  </strong>
+</div>
+<form [formGroup]="form">
+  <div class="main p-3">
+    <ng-container *ngFor="let control of form?.controls | keyvalue">
+      <mat-form-field appearance="legacy" class="m-3" style="width: 200px">
+        <mat-label>{{'customerPage.table.'+ control.key| transloco }}</mat-label>
+        <input matInput placeholder="{{'customerPage.table.'+ control.key| transloco }}" formControlName="{{control.key}}" />
+      </mat-form-field>
+    </ng-container>
+  </div>
+
+  <div class="d-flex justify-content-end pe-5">
+    <button mat-flat-button color="primary" *ngIf="type === 'edit'" (click)="onSave('edit')">
+      <mat-icon>edit</mat-icon> {{'customerPage.save'| transloco }}
+    </button>
+
+    <button mat-flat-button color="primary" *ngIf="type === 'add'" (click)="onSave('add')">
+      <mat-icon>add</mat-icon>{{'customerPage.'+type| transloco }}
+    </button>
+  </div>
+
+</form>

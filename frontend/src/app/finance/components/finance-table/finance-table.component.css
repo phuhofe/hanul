@@ -1,0 +1,17 @@
+.table-wrapper {
+  background-color: #f6f6f6;
+}
+
+.manager-table {
+  max-height: 400px;
+  overflow: auto;
+  padding: 0;
+  
+
+}
+
+.table-row:hover {
+  cursor: pointer;
+  background: #f0f0f0;
+}
+

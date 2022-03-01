@@ -1,0 +1,83 @@
+<div class="container-fluid my-4">
+  <div class="submit">
+    <button mat-flat-button color="primary">
+      {{ "payableReceivablePage.submit" | transloco }}
+    </button>
+  </div>
+
+  <form [formGroup]="supplierForm">
+    <div class="supplier mb-5">
+      <h5 class="mb-3">   {{ "payableReceivablePage.supplier" | transloco }}</h5>
+
+      <mat-card class="supplier-card">
+        <ng-container *ngFor="let control of supplierForm?.controls | keyvalue">
+          <mat-form-field appearance="legacy" class="m-3" style="width: 200px">
+            <!-- <mat-label>{{'pay-receivable.table.'+ control.key| transloco }}</mat-label> -->
+            <mat-label>{{ 'payableReceivablePage.table.' + control.key | transloco }}</mat-label>
+            <input
+              matInput
+              placeholder="{{
+                'payableReceivablePage.table.' + control.key | transloco
+              }}"
+              formControlName="{{ control.key }}"
+            />
+          </mat-form-field>
+        </ng-container>
+      </mat-card>
+    </div>
+  </form>
+
+  <form [formGroup]="transactionForm">
+    <div class="transaction">
+      <h5 class="mb-3"> {{ "payableReceivablePage.transaction" | transloco }}</h5>
+
+      <mat-card class="transaction-card">
+        <ng-container
+          *ngFor="let control of transactionForm?.controls | keyvalue "
+        >
+          <mat-form-field
+            appearance="legacy"
+            class="m-3"
+            style="width: 200px"
+            *ngIf="control.key !== 'method' && control.key !== 'tax'"
+          >
+            <mat-label>{{ 'payableReceivablePage.table.' + control.key | transloco }}</mat-label>
+            <input
+              matInput
+              placeholder="{{
+                'payableReceivablePage.table.' + control.key | transloco
+              }}"
+              formControlName="{{ control.key }}"
+            />
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="legacy"
+            style="width: 200px"
+            *ngIf="control.key === 'method'"
+          >
+            <mat-label>{{ "payableReceivablePage.method" | transloco }}</mat-label>
+            <mat-select formControlName="method" name="method">
+              <mat-option *ngFor="let method of methodOptions" [value]="method">
+                {{ method }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="legacy"
+            style="width: 200px"
+            *ngIf="control.key === 'tax'"
+          >
+            <mat-label>{{ "payableReceivablePage.tax" | transloco }}</mat-label>
+            <mat-select formControlName="tax" name="tax" style="width: 200px">
+              <mat-option *ngFor="let tax of taxOptions" [value]="tax">
+                {{ tax }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ng-container>
+      </mat-card>
+    </div>
+  </form>
+</div>

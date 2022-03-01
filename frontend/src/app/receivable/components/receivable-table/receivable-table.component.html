@@ -1,0 +1,218 @@
+<form [formGroup]="form">
+  <button mat-mini-fab color="primary" class="add-button" (click)="onAdd()">
+    <mat-icon>add</mat-icon>
+  </button>
+
+  <table
+    formArrayName="receivables"
+    mat-table
+    matSort
+    [dataSource]="dataSource"
+    (matSortChange)="sortData($event)"
+    class="w-100 receivable-table"
+  >
+    <ng-container matColumnDef="date">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+        {{ "receivablePage.table.date" | transloco }}
+      </th>
+      <td mat-cell *matCellDef="let element; let rowIndex = index">
+        {{ receivablesForm.controls[rowIndex]?.value.date }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="customer">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+        {{ "receivablePage.table.customer" | transloco }}
+      </th>
+      <td mat-cell *matCellDef="let element; let rowIndex = index">
+        <span *ngIf="!element.isEdit">
+          {{ receivablesForm.controls[rowIndex]?.value.customer }}
+        </span>
+        <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+          <input class="cell-input" formControlName="customer" />
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+        {{ "receivablePage.table.name" | transloco }}
+      </th>
+      <td mat-cell *matCellDef="let element; let rowIndex = index">
+        <span *ngIf="!element.isEdit">
+          {{ receivablesForm.controls[rowIndex]?.value.name }}
+        </span>
+        <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+          <input class="cell-input name" formControlName="name" />
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="method">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+        {{ "receivablePage.table.method" | transloco }}
+      </th>
+      <td mat-cell *matCellDef="let element; let rowIndex = index">
+        <span *ngIf="!element.isEdit">
+          {{ receivablesForm.controls[rowIndex]?.value.method }}
+        </span>
+        <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+          <input class="cell-input method" formControlName="method" />
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="received">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+        {{ "receivablePage.table.received" | transloco }}
+      </th>
+      <td mat-cell *matCellDef="let element; let rowIndex = index">
+        <span *ngIf="!element.isEdit">
+          {{ receivablesForm.controls[rowIndex]?.value.received }}
+        </span>
+        <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+          <input class="cell-input" formControlName="received" />
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="discount">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+        {{ "receivablePage.table.discount" | transloco }}
+      </th>
+      <td mat-cell *matCellDef="let element; let rowIndex = index">
+        <span *ngIf="!element.isEdit">
+          {{ receivablesForm.controls[rowIndex]?.value.discount ?? "-" }}
+        </span>
+        <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+          <input class="cell-input" formControlName="discount" />
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="total">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+        {{ "receivablePage.table.total" | transloco }}
+      </th>
+      <td mat-cell *matCellDef="let element; let rowIndex = index">
+        <span *ngIf="!element.isEdit">
+          {{ receivablesForm.controls[rowIndex]?.value.total }}
+        </span>
+        <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+          <input class="cell-input" formControlName="total" />
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="bank_account">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+        {{ "receivablePage.table.bank_account" | transloco }}
+      </th>
+      <td mat-cell *matCellDef="let element; let rowIndex = index">
+        <span *ngIf="!element.isEdit">
+          {{ receivablesForm.controls[rowIndex]?.value.bank_account }}
+        </span>
+        <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+          <input
+            class="cell-input bank-account"
+            formControlName="bank_account"
+          />
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="notes">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+        {{ "receivablePage.table.notes" | transloco }}
+      </th>
+      <td mat-cell *matCellDef="let element; let rowIndex = index">
+        <span *ngIf="!element.isEdit">
+          {{ receivablesForm.controls[rowIndex]?.value.notes }}
+        </span>
+        <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+          <input class="cell-input" formControlName="notes" />
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="created">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+        {{ "receivablePage.table.created" | transloco }}
+      </th>
+      <td mat-cell *matCellDef="let element; let rowIndex = index">
+        {{ element.created | date: "dd/MM/yyyy HH:mm:ss" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="updated">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef>
+        {{ "receivablePage.table.updated" | transloco }}
+      </th>
+      <td mat-cell *matCellDef="let element; let rowIndex = index">
+        {{ element.updated | date: "dd/MM/yyyy HH:mm:ss" }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ "receivablePage.table.actions" | transloco }}
+      </th>
+      <td mat-cell *matCellDef="let element; let rowIndex = index">
+        <button
+          *ngIf="!element.isEdit"
+          (click)="element.isEdit = true"
+          mat-icon-button
+          color="primary"
+          aria-label="Edit row"
+        >
+          <mat-icon svgIcon="hn-edit"></mat-icon>
+        </button>
+
+        <button
+          *ngIf="element.isEdit"
+          (click)="element.isEdit = false; onSave(rowIndex)"
+          mat-icon-button
+          color="primary"
+          aria-label="Edit row"
+        >
+          <mat-icon> save </mat-icon>
+        </button>
+
+        <button
+          mat-icon-button
+          color="primary"
+          aria-label="Edit row"
+          matTooltip="{{ 'orderPage.edit' | transloco }}"
+          (click)="onEdit(element)"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button
+          mat-icon-button
+          color="warn"
+          aria-label="Delete row"
+          matTooltip="삭제"
+          (click)="element.isEdit = false; onDelete(element.row_id)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" [attr.colspan]="displayedColumns.length">No data</td>
+    </tr>
+  </table>
+
+  <mat-paginator
+    [length]="totalResult"
+    [pageSize]="20"
+    [pageSizeOptions]="[20, 50, 100]"
+    (page)="onPageChange($event)"
+    showFirstLastButtons
+  >
+  </mat-paginator>
+</form>

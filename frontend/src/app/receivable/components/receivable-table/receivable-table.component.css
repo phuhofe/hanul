@@ -1,0 +1,52 @@
+.manager-table {
+  background-color: #f6f6f6;
+  max-height: 400px;
+  overflow: auto;
+  padding: 0;
+}
+
+.no-data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #fafafa;
+  padding: 5rem;
+  height: 75vh;
+}
+
+.cell-input.name {
+  width: 160px;
+}
+
+.cell-input.method {
+  width: 50px;
+}
+
+.cell-input.bank-account {
+  width: 130px;
+}
+
+td, th {
+  /* border-right: 0.5px solid #e7e7e7; */
+  padding-left: 0.5rem !important;
+}
+
+tr:hover {
+  background: #e7e7e7;
+  cursor: pointer;
+}
+
+.add-button {
+  position: absolute;
+  z-index: 1000;
+  right: 0;
+}
+
+.receivable-table{
+  background-color: #f6f6f6;
+  overflow: auto;
+  padding: 0;
+  width: 100%;
+  border-radius: 5px;
+}

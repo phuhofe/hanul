@@ -1,0 +1,59 @@
+@import '~@angular/material/theming';
+@include mat-core(); 
+
+$hanul-color-900: hsl(0, 71%, 26%);
+$hanul-color-800: hsl(0, 71%, 36%);
+$hanul-color-700: hsl(0, 71%, 46%);
+$hanul-color-600: hsl(0, 71%, 56%);
+$hanul-color-500: hsl(0, 71%, 66%);
+$hanul-color-400: hsl(0, 71%, 76%);
+$hanul-color-300: hsl(0, 71%, 86%);
+$hanul-color-200: hsl(0, 71%, 90%);
+$hanul-color-100: hsl(0, 71%, 95%);
+$hanul-color-50: hsl(0, 71%, 98%);
+
+$hanul-shade-100: #f9f9fb;
+$hanul-shade-200: #f4f4f6;
+$hanul-shade-300: #d8d8df;
+$hanul-shade-400: #bcbcc8;
+$hanul-shade-500: #a0a0b1;
+$hanul-shade-600: #84849a;
+$hanul-shade-700: #6a6a81;
+$hanul-shade-800: #535365;
+$hanul-shade-900: #3c3c49;
+
+
+$hanul: (
+    50: $hanul-color-50,
+    100: $hanul-color-100,
+    200: $hanul-color-200,
+    300: $hanul-color-300,
+    400: $hanul-color-400,
+    500: $hanul-color-500,
+    600: $hanul-color-600,
+    700: $hanul-color-700,
+    800: $hanul-color-800,
+    900: $hanul-color-900,
+    A100: $hanul-color-100,
+    A200: $hanul-color-200,
+    A400: $hanul-color-400,
+    A700: $hanul-color-500,
+    contrast: (
+        50: $hanul-shade-100,
+        100: $hanul-shade-100,
+        200: $hanul-shade-200,
+        300: $hanul-shade-300,
+        400: $hanul-shade-400,
+        500: $hanul-shade-100,
+        600: $hanul-shade-200,
+        700: $hanul-shade-300,
+        800: $hanul-shade-800,
+        900: $hanul-shade-900,
+        A100: $hanul-shade-100,
+        A200: $hanul-shade-200,
+        A400: $hanul-shade-400,
+        A700: $hanul-shade-100,
+    )
+);
+
+$hanul-palette-primary: mat-palette($hanul);

@@ -1,0 +1,28 @@
+input {
+  width: 65px;
+}
+
+th {
+  font-weight: bold;
+}
+
+::ng-deep.action-header .mat-sort-header-container {
+  justify-content: center;
+}
+
+.selected-row,
+.selected-row:hover {
+  background: var(--hanul-primary);
+}
+
+.h-0 {
+  height: 0;
+}
+
+.border-none {
+  border: none;
+}
+
+.table-component {
+  overflow-x: auto;
+}

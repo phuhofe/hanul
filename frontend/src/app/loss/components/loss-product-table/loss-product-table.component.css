@@ -1,0 +1,42 @@
+table {
+  width: 100%;
+}
+
+th {
+  font-weight: bold;
+  min-width: 50px;
+}
+
+.mat-header-row:hover{
+  background-color: #f6f6f6;
+}
+
+.th-top {
+  position: relative;
+  padding-left: 5rem;
+  min-width: 80px !important;
+}
+
+.th-top:after {
+  height: 1px;
+  display: block;
+  width: 100px;
+  background: #e66969;
+  position: absolute;
+  content: "";
+  left: 0px;
+  bottom: 0;
+  width: 210px;
+}
+
+.border-none {
+  border: none;
+}
+
+.implemented-date-picker {
+  width: 120px;
+}
+
+.table-component {
+  overflow-x: auto;
+}

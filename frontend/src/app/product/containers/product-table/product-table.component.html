@@ -1,0 +1,292 @@
+<div class="table">
+  <form
+    [formGroup]="form"
+    (keyup.enter)="updateRowData(selectedSku)"
+    (submit)="updateRowData(selectedSku)"
+    class="m-2"
+  >
+    <table
+      mat-table
+      formArrayName="products"
+      [dataSource]="dataSource"
+      matSort
+      (matSortChange)="sortData($event)"
+      class="product-table w-100"
+    >
+      <ng-container matColumnDef="sku">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "appProductPage.table.sku" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ productsForm.controls[rowIndex].value.sku }}
+          </div>
+          <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+            <input
+              class="inline-edit-input"
+              style="width: 80px"
+              formControlName="sku"
+            />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "appProductPage.table.name" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ productsForm.controls[rowIndex].value.name }}
+          </div>
+          <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+            <input
+              class="inline-edit-input"
+              style="width: 80px"
+              formControlName="name"
+            />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="locality">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "appProductPage.table.locality" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ productsForm.controls[rowIndex].value.locality }}
+          </div>
+          <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+            <input
+              class="inline-edit-input"
+              style="width: 80px"
+              formControlName="locality"
+            />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="origin">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "appProductPage.table.origin" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ productsForm.controls[rowIndex].value.origin }}
+          </div>
+          <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+            <input
+              class="inline-edit-input"
+              style="width: 80px"
+              formControlName="origin"
+            />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="meat_category">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "appProductPage.table.meat_category" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ productsForm.controls[rowIndex].value.meat_category }}
+          </div>
+          <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+            <input
+              class="inline-edit-input"
+              style="width: 80px"
+              formControlName="meat_category"
+            />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="part_category">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "appProductPage.table.part_category" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ productsForm.controls[rowIndex].value.part_category }}
+          </div>
+          <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+            <input
+              class="inline-edit-input"
+              style="width: 80px"
+              formControlName="part_category"
+            />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="part">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "appProductPage.table.part" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ productsForm.controls[rowIndex].value.part }}
+          </div>
+          <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+            <input
+              class="inline-edit-input"
+              style="width: 80px"
+              formControlName="part"
+            />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="grade">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "appProductPage.table.grade" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ productsForm.controls[rowIndex].value.grade }}
+          </div>
+          <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+            <input
+              class="inline-edit-input"
+              style="width: 80px"
+              formControlName="grade"
+            />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="cost">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "appProductPage.table.cost" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ productsForm.controls[rowIndex].value.cost }}
+          </div>
+          <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+            <input
+              class="inline-edit-input"
+              style="width: 80px"
+              formControlName="cost"
+            />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "appProductPage.table.price" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ productsForm.controls[rowIndex].value.price }}
+          </div>
+          <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+            <input
+              class="inline-edit-input"
+              style="width: 80px"
+              formControlName="price"
+            />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="meat">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "appProductPage.table.meat" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ productsForm.controls[rowIndex].value.meat }}
+          </div>
+          <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+            <input
+              class="inline-edit-input"
+              style="width: 80px"
+              formControlName="meat"
+            />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <button
+            *ngIf="!element.isEdit"
+            color="primary"
+            class="edit-row-icon"
+            mat-icon-button
+            type="button"
+            (click)="
+              $event.stopPropagation();
+              element.isEdit = true;
+              selectedSku = element.sku
+            "
+            matTooltip="Edit inline"
+          >
+            <mat-icon svgIcon="hn-edit"></mat-icon>
+          </button>
+
+          <button
+            *ngIf="element.isEdit"
+            class="edit-row-icon"
+            mat-icon-button
+            type="button"
+            color="primary"
+            (click)="
+              $event.stopPropagation();
+              element.isEdit = false;
+              updateRowData(element.sku)
+            "
+            matTooltip="Save"
+          >
+            <mat-icon svgIcon="hn-save"></mat-icon>
+          </button>
+
+          <button
+            color="primary"
+            class="edit-row-icon"
+            mat-icon-button
+            type="button"
+            (click)="$event.stopPropagation(); onEditProductTab(element)"
+            matTooltip="Edit in new tab"
+          >
+            <mat-icon svgIcon="hn-edit"></mat-icon>
+          </button>
+
+          <button
+            color="primary"
+            class="edit-row-icon"
+            type="button"
+            (click)="$event.stopPropagation(); deleteRowData(element)"
+            mat-icon-button
+            type="button"
+            matTooltip="수정"
+          >
+            <mat-icon svgIcon="hn-delete"></mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnsToDisplay"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="columnsToDisplay.length">
+          No data
+        </td>
+      </tr>
+    </table>
+  </form>
+  <mat-paginator
+    [length]="totalResult"
+    [pageSize]="20"
+    [pageSizeOptions]="[20, 50, 100]"
+    (page)="pageChange($event)"
+    showFirstLastButtons
+  >
+  </mat-paginator>
+</div>

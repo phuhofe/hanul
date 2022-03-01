@@ -1,0 +1,100 @@
+<div class="p-2">
+  <form [formGroup]="form">
+    <div class="table-component">
+      <table
+        mat-table
+        matSort
+        [dataSource]="dataSource"
+        formArrayName="costPrice"
+        class="w-100 bg-transparent"
+        (matSortChange)="sortData($event)"
+      >
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox
+              color="primary"
+              (change)="$event ? masterToggle() : null"
+            >
+            </mat-checkbox>
+          </th>
+
+          <td mat-cell *matCellDef="let row" style="max-width: 5%">
+            <mat-checkbox
+              color="primary"
+              (click)="$event.stopPropagation()"
+              (change)="$event ? selection.toggle(row) : null"
+              [checked]="selection.isSelected(row)"
+            >
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalCostGoodsBought">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            class="custom-th"
+          >
+            {{ "costPricePage.table.totalCostOfGoodsBought" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{
+                costPriceForm.controls[element.id].value.totalCostGoodsBought
+              }}
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "costPricePage.table.date" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{
+                costPriceForm.controls[element.id]?.value?.date
+                  | date: "dd/MM/yyyy HH:mm:ss"
+              }}
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalCostGoodsSold">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            class="custom-th"
+          >
+            {{ "costPricePage.table.totalPriceOfGoodsSold" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{ costPriceForm.controls[element.id].value.totalCostGoodsSold }}
+            </div>
+          </td>
+        </ng-container>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+            No data
+          </td>
+        </tr>
+      </table>
+    </div>
+  </form>
+  <mat-paginator
+    [pageSizeOptions]="[10, 20, 50, 100]"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+    (page)="pageChange($event)"
+  >
+  </mat-paginator>
+</div>

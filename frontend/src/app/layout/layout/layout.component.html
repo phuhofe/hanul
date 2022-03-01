@@ -1,0 +1,31 @@
+<main class="main">
+  <app-sidebar *ngIf="!statusSidebar"></app-sidebar>
+  <div class="d-flex flex-column w-100">
+    <app-navbar ></app-navbar>
+    <div class="w-100">
+      <div>
+        <button
+          mat-mini-fab
+          color="primary"
+          class="calculator-button"
+          (click)="isOpen = !isOpen"
+          type="button"
+          cdkOverlayOrigin
+          #trigger="cdkOverlayOrigin"
+        >
+          <mat-icon>calculate</mat-icon>
+        </button>
+      </div>
+      
+      <ng-template
+        cdkConnectedOverlay
+        [cdkConnectedOverlayOrigin]="trigger"
+        [cdkConnectedOverlayOpen]="isOpen"
+      >
+        <app-calculator></app-calculator>
+      </ng-template>
+  
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,158 @@
+<div class="row">
+  <div class="col-md-5 total">
+    <div class="total-amount">
+      <p class="amount-title">Total Amount Receivable</p>
+      <p class="amount-number">$20,420,000</p>
+    </div>
+
+    <div class="total-amount">
+      <p class="amount-title">Amount Received Last Week</p>
+      <p class="amount-number">$220,000</p>
+    </div>
+  </div>
+  <div class="col-md-7 analysis">
+    <div class="analysis-content">
+      <div class="analysis-item">
+        <div class="customer-name">name of customer</div>
+        <div class="customer-analysis">
+          <mat-slider
+            thumbLabel
+            tickInterval="1000"
+            step="1000"
+            min="0"
+            max="100000"
+            [(ngModel)]="value"
+            aria-label="units"
+          ></mat-slider>
+        </div>
+      </div>
+      <div class="analysis-item">
+        <div class="customer-name">name of customer</div>
+        <div class="customer-analysis">
+          <mat-slider
+            thumbLabel
+            tickInterval="1000"
+            step="1000"
+            min="0"
+            max="100000"
+            [(ngModel)]="value"
+            aria-label="units"
+          ></mat-slider>
+        </div>
+      </div>
+      <div class="analysis-item">
+        <div class="customer-name">name of customer</div>
+        <div class="customer-analysis">
+          <mat-slider
+            thumbLabel
+            tickInterval="1000"
+            step="1000"
+            min="0"
+            max="100000"
+            [(ngModel)]="value"
+            aria-label="units"
+          ></mat-slider>
+        </div>
+      </div>
+      <div class="analysis-item">
+        <div class="customer-name">name of customer</div>
+        <div class="customer-analysis">
+          <mat-slider
+            thumbLabel
+            tickInterval="1000"
+            step="1000"
+            min="0"
+            max="100000"
+            [(ngModel)]="value"
+            aria-label="units"
+          ></mat-slider>
+        </div>
+      </div>
+      <div class="analysis-item">
+        <div class="customer-name">name of customer</div>
+        <div class="customer-analysis">
+          <mat-slider
+            thumbLabel
+            tickInterval="1000"
+            step="1000"
+            min="0"
+            max="100000"
+            [(ngModel)]="value"
+            aria-label="units"
+          ></mat-slider>
+        </div>
+      </div>
+      <div class="analysis-item">
+        <div class="customer-name">name of customer</div>
+        <div class="customer-analysis">
+          <mat-slider
+            thumbLabel
+            tickInterval="1000"
+            step="1000"
+            min="0"
+            max="100000"
+            [(ngModel)]="value"
+            aria-label="units"
+          ></mat-slider>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="blacklists container-fluid">
+  <p class="title">Blacklists</p>
+  <div class=" row p-0 blacklists-content">
+    <div
+      class="blacklists-item col-12 col-md-6 col-xl-3"
+      (click)="onChangeStatus(ReceivableStatus.WARNED)"
+    >
+      <p class="title-item" [ngClass]="{ 'active-title': isSelectWarned }">
+        Warned
+      </p>
+      <div class="total-content">
+        <img class="total-icon" src="assets/icons/new-user-icon.png" />
+        <p class="total-number">{{ counts.warned }}</p>
+      </div>
+    </div>
+    <div
+      class="blacklists-item col-12 col-md-6 col-xl-3"
+      (click)="onChangeStatus(ReceivableStatus.NO_ORDER)"
+    >
+      <p class="title-item" [ngClass]="{ 'active-title': isSelectNoOrder }">
+        No Order until payment
+      </p>
+      <div class="total-content">
+        <img class="total-icon" src="assets/icons/blocked-user-icon.png" />
+        <p class="total-number">{{ counts.noOrderUntilPayment }}</p>
+      </div>
+    </div>
+    <div
+      class="blacklists-item col-12 col-md-6 col-xl-3"
+      (click)="onChangeStatus(ReceivableStatus.SUED)"
+    >
+      <p class="title-item" [ngClass]="{ 'active-title': isSelectSued }">
+        Sued
+      </p>
+      <div class="total-content">
+        <img class="total-icon" src="assets/icons/blocked-user-icon.png" />
+        <p class="total-number">{{ counts.sued }}</p>
+      </div>
+    </div>
+    <div
+      class="blacklists-item col-12 col-md-6 col-xl-3"
+      (click)="onChangeStatus(ReceivableStatus.CASE_FINALISED)"
+    >
+      <p
+        class="title-item"
+        [ngClass]="{ 'active-title': isSelectCaseFinalised }"
+      >
+        Case Finalised
+      </p>
+      <div class="total-content">
+        <img class="total-icon" src="assets/icons/new-user-icon.png" />
+        <p class="total-number">{{ counts.caseFinalised }}</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,123 @@
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #fafafa;
+  height: 75vh;
+}
+
+.loading-label {
+  margin-top: 1rem;
+}
+
+.table-row:hover {
+  cursor: pointer;
+  background: #f0f0f0;
+}
+
+.header-cell,
+.page-name {
+  text-transform: capitalize;
+}
+
+.no-data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #fafafa;
+  padding: 5rem;
+  height: 75vh;
+}
+
+.btn-print {
+  margin-left: 2rem;
+}
+
+.table-wrapper {
+  min-height: 400px;
+}
+
+.mart-product-table {
+  background-color: #f6f6f6;
+  overflow: auto;
+  padding: 0;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.selected-row,
+.selected-row:hover {
+  background: var(--hanul-primary);
+}
+
+.row-order {
+  padding: 1rem;
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin: 1rem 0 1rem 0;
+  background-color: white;
+}
+
+.detail-row {
+  border-bottom-width: 0px;
+  padding-bottom: 1rem;
+}
+
+.h-0 {
+  height: 0;
+}
+
+.hide-progress-bar {
+  height: 4px;
+  width: 100%;
+  padding: 0;
+}
+
+.list-group-item:hover {
+  background: #41464b3d;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.getting-order-units-data {
+  height: 200px;
+}
+
+.mat-icon-button {
+  padding: 0;
+  min-width: 0;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  line-height: 32px;
+  border-radius: 50%;
+}
+
+input {
+  width: 50px;
+}
+
+th {
+  min-width: 100px;
+}
+
+.table-component {
+  overflow-x: auto;
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem;
+}
+
+.order-update {
+  min-width: 120px;
+}
+
+.mat-paginator {
+  background-color: #f6f6f6;
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+}
+

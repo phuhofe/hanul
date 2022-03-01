@@ -1,0 +1,15 @@
+.manager-table {
+  background-color: #f6f6f6;
+  max-height: 400px;
+  overflow: auto;
+  padding: 0;
+}
+.no-data {
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  flex-direction: column;
+  background-color: #fafafa; 
+  padding: 5rem;
+  height: 75vh;
+}

@@ -1,0 +1,131 @@
+<form [formGroup]="customerForm" class="product-form p-4">
+  <app-tab-layout>
+    <div title>{{ action }} {{ pageName }}</div>
+    <div closeDialog>
+      <button mat-icon-button (click)="closeDialog()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div main>
+      <div class="row">
+        <div class="col-md-4">
+          <mat-form-field appearance="legacy">
+            <mat-label> {{"appManagerPage.table.ownerName" | transloco }} </mat-label>
+            <input matInput formControlName="owner_name" />
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy">
+            <mat-label> {{"appManagerPage.table.ownerAddress" | transloco }} </mat-label>
+            <input matInput formControlName="owner_address" />
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label> {{"appManagerPage.table.email" | transloco }} </mat-label>
+            <input matInput formControlName="email" />
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy">
+            <mat-label>{{"appManagerPage.table.dob" | transloco }}</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="dob" />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <div class="d-flex">
+            <mat-form-field appearance="legacy" class="pe-3">
+              <mat-label> {{"appManagerPage.table.mobile_no" | transloco }} </mat-label>
+              <input type="number" matInput formControlName="mobile_no" />
+            </mat-form-field>
+
+            <mat-form-field appearance="legacy">
+              <mat-label>{{"appManagerPage.table.phone_no" | transloco }} </mat-label>
+              <input type="number" matInput formControlName="phone_no" />
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="legacy">
+            <mat-label>{{"appManagerPage.table.status" | transloco }}</mat-label>
+            <input matInput formControlName="status" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field appearance="legacy">
+            <mat-label>
+              {{ "orderPage.table.business_no" | transloco }}
+            </mat-label>
+            <input matInput formControlName="business_no" />
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy">
+            <mat-label>{{"appManagerPage.table.business_certificate" | transloco }}</mat-label>
+            <input matInput formControlName="business_certificate" />
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy">
+            <mat-label>{{"appManagerPage.table.business_address" | transloco }}</mat-label>
+            <input matInput formControlName="business_address" />
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy">
+            <mat-label>{{"appManagerPage.table.business_category" | transloco }} </mat-label>
+            <input matInput formControlName="business_address" />
+          </mat-form-field>
+        </div>
+        <div class="col-md-4">
+          <mat-form-field appearance="legacy">
+            <mat-label>{{"appManagerPage.table.business_name" | transloco }} </mat-label>
+            <input matInput formControlName="business_name" />
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy">
+            <mat-label>{{"appManagerPage.table.business_type" | transloco }}</mat-label>
+            <input matInput formControlName="business_type" />
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy">
+            <mat-label>{{"appManagerPage.table.buyer_category" | transloco }}</mat-label>
+            <mat-select formControlName="buyer_category">
+              <mat-option *ngFor="let type of allTypes" [value]="type.value">
+                  {{ "appManagerPage."+type.label | transloco}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div action>
+      <button
+        *ngIf="action === 'edit'"
+        mat-flat-button
+        color="primary"
+        class="text-capitalize mx-2"
+        (click)="doAction()"
+      >
+        <mat-icon>save</mat-icon>{{"appManagerPage.save" | transloco }}
+      </button>
+      <button
+        *ngIf="action === 'add'"
+        mat-flat-button
+        color="primary"
+        class="text-capitalize mx-2"
+        (click)="doAction()"
+      >
+        <mat-icon>add</mat-icon>{{"appManagerPage.add" | transloco }}
+      </button>
+
+      <button
+        mat-flat-button
+        color="primary"
+        class="text-capitalize mx-2"
+        (click)="resetAll()"
+        *ngIf="action === 'edit'"
+      >
+        <mat-icon>restart_alt</mat-icon>{{"appManagerPage.resetAll" | transloco }}
+      </button>
+    </div>
+  </app-tab-layout>
+</form>

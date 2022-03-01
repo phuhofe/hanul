@@ -1,0 +1,10 @@
+.developing {
+  color: var(--hanul-primary);
+  text-align: center;
+  padding-top: 1rem;
+  font-size: 1.5rem;
+}
+
+.img-developing {
+  width: 50%;
+}

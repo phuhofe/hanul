@@ -1,0 +1,19 @@
+table {
+  width: 100%;
+}
+
+.custom-th {
+  min-width: 90px;
+}
+
+.border-none {
+  border: none;
+}
+
+.implemented-date-picker {
+  width: 120px;
+}
+
+.table-component {
+  overflow-x: auto;
+}

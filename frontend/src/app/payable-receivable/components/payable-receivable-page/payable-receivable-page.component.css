@@ -1,0 +1,110 @@
+table {
+  width: 100%;
+}
+
+th {
+  font-weight: bold;
+  min-width: 50px;
+}
+
+.custom-th{
+  min-width: 90px;
+}
+
+.serial-code-column {
+  white-space: pre;
+}
+
+.border-none {
+  border: none;
+}
+
+.implemented-date-picker {
+  width: 120px;
+}
+
+.checkbox {
+  max-width: 5%;
+}
+
+.amount-own-value {
+  padding-left: 2.5rem;
+}
+
+.list-result {
+  display: flex;
+  align-items: center;
+}
+
+.product-search {
+  padding: 0.2rem;
+  height: 26px;
+  border-radius: 5px;
+  border: 1px solid #f68383;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-right: 1rem;
+}
+
+.product_search p {
+  color: #f68383;
+  margin-bottom: 0;
+  padding: 0.5rem;
+}
+
+.remove {
+  display: inline-block;
+  font-weight: normal;
+  font-size: 14px;
+  color: #474747;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.clear-all {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-decoration-line: underline;
+  color: #f68383;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.total-result {
+  font-size: 24px;
+}
+
+.table {
+  background: #f6f6f6;
+  border-radius: 2rem;
+}
+
+.add mat-icon{
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+
+.hide-progress-bar {
+  height: 4px;
+  width: 100%;
+  padding: 0;
+}
+
+.tab-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+:host ::ng-deep.mat-tab-label .mat-tab-label-content{
+  width: 100%;
+}
+
+.clear-search-key {
+  cursor: pointer;
+}

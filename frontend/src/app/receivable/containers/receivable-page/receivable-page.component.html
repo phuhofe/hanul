@@ -1,0 +1,48 @@
+<mat-tab-group
+  [selectedIndex]="selected.value"
+  (selectedIndexChange)="onSelectTabIndex($event)"
+>
+  <mat-tab label="{{ 'orderPage.main' | transloco }}">
+    <div class="py-4 px-3">
+      <div>
+        <app-receivable-data [counts]="counts"></app-receivable-data>
+      </div>
+
+      <div class="table-blacklists">
+        <app-receivable-search
+          (search)="onSearch($event)"
+        ></app-receivable-search>
+        
+        <app-receivable-table
+          [searchParam]="searchParam"
+          (add)="onAddReceivableTab()"
+          (edit)="onEditReceivableTab($event)"
+        >
+        </app-receivable-table>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab
+    *ngFor="let tab of tabs; let index = index"
+    label="{{ 'orderPage.' + tab.label | transloco }}"
+  >
+    <ng-template mat-tab-label>
+      <div class="tab-label">
+        <span class="text-capitalize">
+          {{ "orderPage." + tab.label | transloco }}
+        </span>
+
+        <button mat-icon-button (click)="closeTab(index)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </ng-template>
+
+    <app-add-receivable
+      [type]="tab.type"
+      [data]="tab.data"
+      (save)="onSave($event, index)"
+    ></app-add-receivable>
+  </mat-tab>
+</mat-tab-group>

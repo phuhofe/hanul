@@ -1,0 +1,11 @@
+<div class="type-container py-4 px-3">
+  <div
+    *ngFor="let type of types"
+    [ngClass]="{ selected: selectedTable === type.value }"
+    class="type"
+    (click)="onSelectTableType(type.value)"
+  >
+    <app-table-accounts-search [typeName]="type.name"></app-table-accounts-search>
+    <app-table-accounts></app-table-accounts>
+  </div>
+</div>

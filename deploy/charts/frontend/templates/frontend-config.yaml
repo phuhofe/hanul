@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: frontend-config-{{ .Values.client.release }}
+data:
+    CLUSTER_ENVIRONMENT: {{ .Values.client.release }}
+    CLUSTER_DOMAIN: https://{{ .Values.ingress.subdomain }}.hanul-fns.com

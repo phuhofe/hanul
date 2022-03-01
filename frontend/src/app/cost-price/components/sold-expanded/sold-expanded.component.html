@@ -1,0 +1,363 @@
+<div class="expanded-table-border">
+  <form [formGroup]="form">
+    <table
+      mat-table
+      matSort
+      [dataSource]="dataSource"
+      formArrayName="costPrice"
+      class="w-100 bg-transparent"
+    >
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox
+            color="primary"
+            class="pe-3"
+            (change)="$event ? masterToggle() : null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()"
+          >
+          </mat-checkbox>
+        </th>
+
+        <td mat-cell *matCellDef="let row" style="max-width: 5%">
+          <mat-checkbox
+            color="primary"
+            class="pe-3"
+            (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)"
+          >
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="serialCode">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="custom-th">
+          {{ "costPricePage.table.serialCode" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ costPriceForm.controls[element.id].value.serialCode }}
+          </div>
+          <div
+            *ngIf="element.isEdit"
+            [formGroupName]="element.id"
+            (click)="$event.stopPropagation()"
+          >
+            <input class="cell-input" formControlName="serialCode" />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "costPricePage.table.code" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ costPriceForm.controls[element.id].value.code }}
+          </div>
+          <div
+            *ngIf="element.isEdit"
+            [formGroupName]="element.id"
+            (click)="$event.stopPropagation()"
+          >
+            <input class="cell-input" formControlName="code" />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "costPricePage.table.name" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ costPriceForm.controls[element.id].value.name }}
+          </div>
+          <div
+            *ngIf="element.isEdit"
+            [formGroupName]="element.id"
+            (click)="$event.stopPropagation()"
+          >
+            <input class="cell-input" formControlName="name" />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="origin">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "costPricePage.table.origin" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ costPriceForm.controls[element.id].value.origin }}
+          </div>
+          <div
+            *ngIf="element.isEdit"
+            [formGroupName]="element.id"
+            (click)="$event.stopPropagation()"
+          >
+            <input class="cell-input" formControlName="origin" />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="box">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "costPricePage.table.box" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ costPriceForm.controls[element.id].value.box }}
+          </div>
+          <div
+            *ngIf="element.isEdit"
+            [formGroupName]="element.id"
+            (click)="$event.stopPropagation()"
+          >
+            <input class="cell-input" formControlName="box" />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="kg">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "costPricePage.table.kg" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ costPriceForm.controls[element.id].value.kg }}
+          </div>
+          <div
+            *ngIf="element.isEdit"
+            [formGroupName]="element.id"
+            (click)="$event.stopPropagation()"
+          >
+            <input class="cell-input" formControlName="kg" />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="q">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "costPricePage.table.q" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ costPriceForm.controls[element.id].value.q }}
+          </div>
+          <div
+            *ngIf="element.isEdit"
+            [formGroupName]="element.id"
+            (click)="$event.stopPropagation()"
+          >
+            <input class="cell-input" formControlName="q" />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="unitPrice">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="custom-th">
+          {{ "costPricePage.table.unitPrice" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ costPriceForm.controls[element.id].value.unitPrice }}
+          </div>
+          <div
+            *ngIf="element.isEdit"
+            [formGroupName]="element.id"
+            (click)="$event.stopPropagation()"
+          >
+            <input class="cell-input" formControlName="unitPrice" />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="totalPrice">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="custom-th">
+          {{ "costPricePage.table.totalPrice" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ costPriceForm.controls[element.id].value.totalPrice }}
+          </div>
+          <div
+            *ngIf="element.isEdit"
+            [formGroupName]="element.id"
+            (click)="$event.stopPropagation()"
+          >
+            <input class="cell-input" formControlName="totalPrice" />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="branch">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "costPricePage.table.branch" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ costPriceForm.controls[element.id].value.branch }}
+          </div>
+          <div
+            *ngIf="element.isEdit"
+            [formGroupName]="element.id"
+            (click)="$event.stopPropagation()"
+          >
+            <input class="cell-input" formControlName="branch" />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "costPricePage.table.date" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{
+              costPriceForm.controls[element.id]?.value?.date
+                | date: "dd/MM/yyyy HH:mm:ss"
+            }}
+          </div>
+          <div
+            *ngIf="element.isEdit"
+            [formGroupName]="element.id"
+            (click)="$event.stopPropagation()"
+          >
+            <mat-form-field appearance="legacy" class="implemented-date-picker">
+              <input matInput formControlName="date" [matDatepicker]="picker" />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="customer">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "costPricePage.table.customer" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ costPriceForm.controls[element.id].value.customer }}
+          </div>
+          <div
+            *ngIf="element.isEdit"
+            [formGroupName]="element.id"
+            (click)="$event.stopPropagation()"
+          >
+            <input class="cell-input" formControlName="customer" />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="receivable">
+        <th mat-header-cell *matHeaderCellDef class="custom-th" mat-sort-header>
+          {{ "costPricePage.table.receivable" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ costPriceForm.controls[element.id].value.receivable }}
+          </div>
+          <div
+            *ngIf="element.isEdit"
+            [formGroupName]="element.id"
+            (click)="$event.stopPropagation()"
+          >
+            {{ element.id }}
+            <input class="cell-input" formControlName="receivable" />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="tax">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "costPricePage.table.tax" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ costPriceForm.controls[element.id].value.tax }}
+          </div>
+          <div
+            *ngIf="element.isEdit"
+            [formGroupName]="element.id"
+            (click)="$event.stopPropagation()"
+          >
+            <input class="cell-input" formControlName="tax" />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "costPricePage.table.category" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit">
+            {{ costPriceForm.controls[element.id].value.category }}
+          </div>
+          <div
+            *ngIf="element.isEdit"
+            [formGroupName]="element.id"
+            (click)="$event.stopPropagation()"
+          >
+            <input class="cell-input" formControlName="category" />
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ "costPricePage.table.actions" | transloco }}
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element; let rowIndex = index"
+          class="text-center pe-0"
+        >
+          <button
+            mat-icon-button
+            type="button"
+            matTooltip="수정"
+            (click)="$event.stopPropagation(); element.isEdit = false"
+          >
+            <mat-icon svgIcon="hn-save"></mat-icon>
+          </button>
+
+          <button
+            mat-icon-button
+            type="button"
+            matTooltip="inline edit"
+            (click)="$event.stopPropagation(); element.isEdit = true"
+          >
+            <mat-icon svgIcon="hn-edit"></mat-icon>
+          </button>
+
+          <!-- <button mat-icon-button type="button" matTooltip="수정">
+            <mat-icon svgIcon="hn-delete"></mat-icon>
+          </button> -->
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        class="table-row"
+        *matRowDef="let row; let element; columns: displayedColumns"
+      ></tr>
+    </table>
+  </form>
+
+  <mat-paginator
+    [pageSizeOptions]="[10, 20, 50, 100]"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+  >
+  </mat-paginator>
+</div>

@@ -1,0 +1,104 @@
+<mat-tab-group
+  [selectedIndex]="selected.value"
+  (selectedIndexChange)="onSelectTabIndex($event)"
+>
+
+  <mat-tab label="{{ 'orderPage.main' | transloco }}">
+    <div class="app-manager-container my-4 mx-3">
+      <div class="d-flex flex-wrap">
+        <div
+          *ngFor="let type of types"
+          [ngClass]="{ selected: selectedTable === type.value }"
+          class="type d-flex align-items-center p-2 me-2"
+          (click)="onSelectTableType(type.value)"
+        >
+          <img [src]="type.icon" class="type-icon" />
+
+          <h5 class="type-name">
+            {{ "appManagerPage." + type.name | transloco }}
+          </h5>
+        </div>
+      </div>
+
+      <div class="manager-table mt-4">
+        <ng-container *ngIf="selectedTable === 'product'">
+          <app-product-manager-table
+            [selectedTable]="selectedTable"
+            (delete)="deleteProduct($event)"
+            (edit)="onEditProductTab($event)"
+            (add)="onAddCustomerTab($event)"
+          >
+          </app-product-manager-table>
+        </ng-container>
+
+        <ng-container *ngIf="selectedTable === 'notification'">
+          <app-notification-table
+            [selectedTable]="selectedTable"
+            (delete)="deleteProduct($event)"
+            (edit)="onEditProductTab($event)"
+            (pushNoti)="onPushNotification($event)"
+          >
+          </app-notification-table>
+        </ng-container>
+
+        <ng-container
+          *ngIf="
+            selectedTable !== 'notification' && selectedTable !== 'product'
+          "
+        >
+          <app-customer-manager-table
+            [selectedTable]="selectedTable"
+            [searchParam]="searchParam"
+            (delete)="deleteProduct($event)"
+            (edit)="onEditProductTab($event)"
+          >
+          </app-customer-manager-table>
+        </ng-container>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab
+    *ngFor="let tab of tabs; let index = index"
+    label="{{ 'appManagerPage.' + tab.label | transloco }}"
+  >
+    <ng-template mat-tab-label>
+      <div class="tab-label">
+        <span>{{ "appManagerPage." + tab.label | transloco }}</span>
+
+        <button mat-icon-button (click)="closeTab(index)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </ng-template>
+
+    <ng-container *ngIf="tab.type !== 'product'; else elseProduct">
+      <app-customer-action
+        *ngIf="tab.type !== 'notification'"
+        [data]="tab.data ? tab.data : null"
+        [action]="tab.action"
+        (close)="closeTab(index)"
+        (editCustomer)="editCustomer($event)"
+      >
+      </app-customer-action>
+
+      <app-push-notification
+        *ngIf="tab.type === 'notification'"
+        [data]="tab.data ? tab.data : null"
+        (notificationData)="pushNotification($event)"
+      >
+      </app-push-notification>
+    </ng-container>
+
+    <ng-template #elseProduct>
+      <app-product-manager-action
+        [data]="tab.data ? tab.data : null"
+        [action]="tab.action"
+        (close)="closeTab(index)"
+        (editProduct)="editProduct($event)"
+        (addProduct)="addProduct($event)"
+        (updatingForm)="onUpdatingTab($event, index)"
+      ></app-product-manager-action>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,108 @@
+<mat-tab-group
+  [selectedIndex]="selected.value"
+  (selectedIndexChange)="onSelectTabIndex($event)"
+>
+  <mat-tab label="{{ 'orderPage.main' | transloco }}">
+    <div class="pt-3">
+      <app-filter-table
+        [columnData]="columnData"
+        [tableTypes]="tableTypes"
+        [clearAll]="clearAll"
+        (filter)="onFilter($event)"
+        (selectTable)="onSelectedTable($event)"
+        (resetSearch)="onResetSearch($event)"
+        [module]="'products'"
+      ></app-filter-table>
+    </div>
+
+    <div class="table">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="list-result pt-4 ps-4">
+          <strong class="total-result m-0 me-3">
+            {{ totalProduct ?? "loading" }}
+            {{ "lossPage.products" | transloco }}
+          </strong>
+
+          <div class="d-flex flex-wrap align-items-center">
+            <ng-container *ngIf="filterArray.length > 0">
+              <div
+                class="product-search"
+                *ngFor="let searchKey of filterArray; let i = index"
+              >
+                <div class="me-2 m-0">
+                  {{ searchKey }}
+                </div>
+                <div
+                  class="clear-search-key d-flex"
+                  (click)="removeSearchKey(i)"
+                >
+                  <mat-icon>clear</mat-icon>
+                </div>
+              </div>
+              <button mat-button color="primary" (click)="onClearAll()">
+                <u class="text-underline">
+                  {{ "common.clearAll" | transloco }}
+                </u>
+              </button>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="add me-2">
+          <mat-icon svgIcon="hn-add" (click)="onAddProductTab()"></mat-icon>
+        </div>
+      </div>
+
+      <div>
+        <ng-container
+          *ngIf="selectedTable === ProductTableType.PRODUCT || !selectedTable"
+        >
+          <app-product-table
+            (totalProduct)="onUpdateTotal($event)"
+            (editProductTab)="onEditProductTab($event)"
+            [search]="search"
+          ></app-product-table>
+        </ng-container>
+
+        <ng-container *ngIf="selectedTable === ProductTableType.DETAIL">
+          <app-product-table
+            (totalProduct)="onUpdateTotal($event)"
+            (editProductTab)="onEditProductTab($event)"
+          ></app-product-table>
+        </ng-container>
+
+        <ng-container *ngIf="selectedTable === ProductTableType.ORIGINAL">
+          <app-product-table
+            (totalProduct)="onUpdateTotal($event)"
+            (editProductTab)="onEditProductTab($event)"
+          ></app-product-table>
+        </ng-container>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab
+    *ngFor="let tab of tabs; let index = index"
+    label="{{ 'orderPage.' + tab.label | transloco }}"
+  >
+    <ng-template mat-tab-label>
+      <div class="tab-label">
+        <span class="text-capitalize">{{
+          "orderPage." + tab.label | transloco
+        }}</span>
+
+        <button mat-icon-button (click)="closeTab(index)">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+    </ng-template>
+
+    <app-product-action
+      [data]="tab.data ? tab.data : null"
+      [action]="tab.action"
+      (editProduct)="editProductTab($event)"
+      (addProduct)="addProductTab($event)"
+      (updatingForm)="onUpdatingTab($event, index)"
+    ></app-product-action>
+  </mat-tab>
+</mat-tab-group>

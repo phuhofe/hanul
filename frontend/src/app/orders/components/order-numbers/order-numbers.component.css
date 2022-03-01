@@ -1,0 +1,14 @@
+.number-card {
+  flex: 1;
+  /* background: var(--hanul-secondary); */
+}
+
+.action {
+  height: 60px;
+  margin-bottom: 1rem;
+}
+
+p:hover {
+  background: var(--hanul-primary);
+  cursor: pointer;
+}

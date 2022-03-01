@@ -1,0 +1,9 @@
+.supplier-card, .transaction-card {
+  background: #F7F7F7;
+}
+
+.submit {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}

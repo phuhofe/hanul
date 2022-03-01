@@ -1,0 +1,14 @@
+
+.navbar {
+  background-color: var(--hanul-primary);;
+}
+
+.notifications {
+  margin: 0;
+  height: 40px;
+  display: flex;
+}
+
+.navbar-brand{
+  cursor: pointer;
+}

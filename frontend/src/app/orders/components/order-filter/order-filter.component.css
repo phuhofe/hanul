@@ -1,0 +1,23 @@
+.table-type {
+  width: 110px;
+}
+
+.calendar-card {
+  width: 200px;
+  padding: 0;
+}
+
+.calendar-title {
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 0;
+  padding-top: 0.5rem;
+}
+
+::ng-deep.calendar-card .mat-calendar-header {
+  padding: 0 !important;
+}
+
+.form-select {
+  width: 200px;
+}

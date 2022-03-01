@@ -1,0 +1,142 @@
+<mat-progress-bar
+  *ngIf="isChangeType"
+  class="p-0"
+  color="primary"
+  [mode]="'indeterminate'"
+></mat-progress-bar>
+
+<table
+  mat-table
+  class="manager-table"
+  [dataSource]="dataSource"
+  matSort
+  (matSortChange)="sortData($event)"
+  matSortActive="business_no"
+  matSortDirection="asc"
+  multiTemplateDataRows
+  matSortDisableClear
+>
+  <ng-container *ngFor="let column of columns" [matColumnDef]="column">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="header-cell">
+      {{ "appManagerPage.table." + column | transloco | rowName }}
+    </th>
+
+    <td mat-cell *matCellDef="let element">
+      <span *ngIf="column === 'created' || column === 'updated'; else other">
+        {{ element[column] | date: "YYYY-mm-dd" }}
+      </span>
+      <ng-template #other> {{ element[column] }} </ng-template>
+    </td>
+  </ng-container>
+
+  <ng-container *ngIf="editable" matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef class="header-cell">
+      {{ "appManagerPage.action" | transloco }}
+    </th>
+
+    <td mat-cell *matCellDef="let product" class="action-link">
+      <button
+        mat-icon-button
+        color="primary"
+        aria-label="Edit row"
+        matTooltip="수정"
+        (click)="editCustomer(product)"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        color="warn"
+        aria-label="Delete row"
+        matTooltip="삭제"
+        (click)="onDelete(product.business_no)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="image">
+    <td
+      mat-cell
+      *matCellDef="let element"
+      [attr.colspan]="columnsToDisplay.length"
+    >
+      <div class="element-detail d-flex py-4">
+        <div style="margin-right: 5rem">
+          <strong>{{ "appManagerPage.table.owner" | transloco }}</strong>
+
+          <div class="list-group list-group-flush">
+            <a href="#" class="list-group-item list-group-item-action">
+              {{ "appManagerPage.table.ownerName" | transloco }}:
+              {{ element.owner_name }}
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              {{ "appManagerPage.table.ownerAddress" | transloco }}:
+              {{ element.owner_address }}
+            </a>
+          </div>
+        </div>
+
+        <div class="me-4">
+          <strong>{{ "appManagerPage.table.business" | transloco }}</strong>
+
+          <div class="list-group list-group-flush">
+            <a href="#" class="list-group-item list-group-item-action">
+              {{ "appManagerPage.table.business_no" | transloco }}:
+              {{ element.business_no }}
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              {{ "appManagerPage.table.business_name" | transloco }}:
+              {{ element.business_name }}
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              {{ "appManagerPage.table.business_type" | transloco }}:
+              {{ element.business_type }}
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              {{ "appManagerPage.table.business_category" | transloco }}:
+              {{ element.business_category }}
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              {{ "appManagerPage.table.business_certificate" | transloco }}:
+              {{ element.business_certificate }}
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              {{ "appManagerPage.table.business_address" | transloco }}:
+              {{ element.business_address }}
+            </a>
+          </div>
+        </div>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
+
+  <tr
+    mat-row
+    class="table-row"
+    matRipple
+    *matRowDef="let row; columns: columnsToDisplay"
+  ></tr>
+
+  <tr mat-row *matRowDef="let row; columns: ['image']" class="detail-row"></tr>
+</table>
+
+<div class="no-data" *ngIf="totalResult === 0">
+  <!-- <img
+    src="https://ringxe.vn/static/imgs/nodata-found.png"
+    alt="No data found"
+  /> -->
+  No data
+</div>
+
+<mat-paginator
+  [length]="totalResult"
+  [pageSize]="20"
+  [pageSizeOptions]="[20, 50, 100]"
+  showFirstLastButtons
+>
+</mat-paginator>

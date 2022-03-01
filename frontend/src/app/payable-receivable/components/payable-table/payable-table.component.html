@@ -1,0 +1,205 @@
+<div>
+  <form [formGroup]="form" class="p-0">
+    <table
+      mat-table
+      matSort
+      [dataSource]="dataSource"
+      formArrayName="payableReceivable"
+      class="w-100 bg-transparent"
+      multiTemplateDataRows
+      (matSortChange)="sortData($event)"
+    >
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef class="pe-3 checkbox">
+          <mat-checkbox
+            color="primary"
+            (change)="$event ? masterToggle() : null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()"
+          >
+          </mat-checkbox>
+        </th>
+
+        <td mat-cell *matCellDef="let row" class="pe-3 checkbox">
+          <mat-checkbox
+            color="primary"
+            (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)"
+          >
+          </mat-checkbox>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="supplier">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "payableReceivablePage.table.supplier" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div
+            *ngIf="!element.isEdit"
+            [ngClass]="{ 'd-none': isDaily || isWeekly }"
+          >
+            {{ element.supplier }}
+          </div>
+          <div
+            *ngIf="element.isEdit"
+            [formGroupName]="element.id"
+            (click)="$event.stopPropagation()"
+          >
+            <input class="cell-input" formControlName="supplier" />
+          </div>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="code">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ "payableReceivablePage.table.code" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit" [ngClass]="{ 'd-none': isDaily }">
+            {{ element.code }}
+          </div>
+          <div
+            *ngIf="element.isEdit"
+            [formGroupName]="element.id"
+            (click)="$event.stopPropagation()"
+          >
+            <input class="cell-input" formControlName="code" />
+          </div>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="amountBought">
+        <th mat-header-cell *matHeaderCellDef class="custom-th" mat-sort-header>
+          {{ "payableReceivablePage.table.amountBought" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit" class="amount-own-value">
+            {{ element.amountBought }}
+          </div>
+          <div
+            *ngIf="element.isEdit"
+            [formGroupName]="element.id"
+            (click)="$event.stopPropagation()"
+          >
+            <input class="cell-input" formControlName="amountBought" />
+          </div>
+        </td>
+        <td mat-footer-cell *matFooterCellDef>$ 77,129,000</td>
+      </ng-container>
+
+      <ng-container matColumnDef="amountPaid">
+        <th mat-header-cell *matHeaderCellDef class="custom-th" mat-sort-header>
+          {{ "payableReceivablePage.table.amountPaid" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit" class="amount-own-value">
+            {{ element.amountPaid }}
+          </div>
+          <div
+            *ngIf="element.isEdit"
+            [formGroupName]="element.id"
+            (click)="$event.stopPropagation()"
+          >
+            <input class="cell-input" formControlName="amountPaid" />
+          </div>
+        </td>
+        <td mat-footer-cell *matFooterCellDef>$ 39,129,000</td>
+      </ng-container>
+
+      <ng-container matColumnDef="amountOwe">
+        <th mat-header-cell *matHeaderCellDef class="custom-th" mat-sort-header>
+          {{ "payableReceivablePage.table.totalAmountOwe" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit" class="amount-own-value">
+            {{ element.amountOwe }}
+          </div>
+          <div
+            *ngIf="element.isEdit"
+            [formGroupName]="element.id"
+            (click)="$event.stopPropagation()"
+          >
+            <input class="cell-input" formControlName="amountOwe" />
+          </div>
+        </td>
+        <td mat-footer-cell *matFooterCellDef>$ 320,129,000</td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastEdited">
+        <th mat-header-cell *matHeaderCellDef class="custom-th" mat-sort-header>
+          {{ "payableReceivablePage.table.lastEdited" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div *ngIf="!element.isEdit" class="amount-own-value">
+            {{ element.lastEdited | date: "YYYY-mm-dd" }}
+          </div>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="branch">
+        <th mat-header-cell *matHeaderCellDef class="custom-th" mat-sort-header>
+          {{ "payableReceivablePage.table.branch" | transloco }}
+        </th>
+        <td mat-cell *matCellDef="let element; let rowIndex = index">
+          <div
+            *ngIf="!element.isEdit"
+            [ngClass]="{ 'd-none': isWeekly }"
+            class="amount-own-value"
+          >
+            {{ element.branch }}
+          </div>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <ng-container matColumnDef="expandedDetail">
+        <td
+          mat-cell
+          *matCellDef="let element"
+          [attr.colspan]="17"
+          class="p-0 ex pand-cell border-none"
+        >
+          <div
+            class="data-detail w-100 bg-white"
+            [ngClass]="{ 'd-none border-none': !checkExpanded(element) }"
+          >
+            <app-payable-expanded [type]="type"></app-payable-expanded>
+          </div>
+        </td>
+        <td mat-footer-cell *matFooterCellDef></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        class="table-row"
+        *matRowDef="let row; let element; columns: displayedColumns"
+        (click)="pushPopElement(element)"
+        [class.selected-row]="checkExpanded(element)"
+      ></tr>
+
+      <tr mat-footer-row *matFooterRowDef="displayedColumns; sticky: true"></tr>
+
+      <tr
+        mat-row
+        *matRowDef="let element; columns: ['expandedDetail']"
+        class="detail-row border-none"
+        [@detailExpand]="checkExpanded(element) ? 'expanded' : 'collapsed'"
+      ></tr>
+    </table>
+  </form>
+  <mat-paginator
+    [pageSizeOptions]="[10, 20, 50, 100]"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+    class="bg-transparent"
+    (page)="pageChange($event)"
+  >
+  </mat-paginator>
+</div>

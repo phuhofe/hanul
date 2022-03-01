@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: frontend-deploy-{{ .Values.client.release }}
+    labels:
+        app: frontend-{{ .Values.client.release }}
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: frontend-{{ .Values.client.release }}
+    template:
+        metadata:
+            labels:
+                app: frontend-{{ .Values.client.release }}
+            annotations:
+                seed: {{ randAlphaNum 12 | quote }}
+        spec:
+            containers:
+              - name: frontend-deploy-{{ .Values.client.release }}
+                image: slee0426/frontend:{{ .Values.client.tag }}
+                imagePullPolicy: Always
+                ports:
+                  - containerPort: 80
+                envFrom:
+                  - configMapRef:
+                        name: frontend-config-{{ .Values.client.release }}
+            imagePullSecrets:
+              - name: docker-secret

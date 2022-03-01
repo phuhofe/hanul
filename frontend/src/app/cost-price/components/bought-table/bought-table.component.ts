@@ -1,0 +1,129 @@
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
+import { TableHelper } from '@app/table-helper';
+import { setupAnimation } from '@app/animation';
+import { Destroyable, takeUntilDestroyed } from '@app/core/take-until-destroy';
+import { SortByTypesBought } from '@app/cost-price/models/cost-price-table-type.enum';
+import { CostPriceBoughtService } from '@app/cost-price/services/cost-price-bought.service';
+
+import { HNTableColumns } from 'src/table-columns-data';
+
+@Destroyable()
+@Component({
+  selector: 'app-bought-table',
+  templateUrl: './bought-table.component.html',
+  styleUrls: ['./bought-table.component.css'],
+  animations: [setupAnimation()],
+})
+export class BoughtTableComponent extends TableHelper implements OnInit {
+  @Input() type!: string;
+  @Output() totalProduct = new EventEmitter();
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  typeEnum = SortByTypesBought;
+  displayedColumns = HNTableColumns.BoughtTableColumns;
+  form!: FormGroup;
+  costPriceForm: FormArray = new FormArray([]);
+  source: any;
+  isLoaded = false;
+
+  constructor(
+    private service: CostPriceBoughtService,
+    private formBuilder: FormBuilder
+  ) {
+    super();
+    this.buildForm();
+  }
+
+  ngOnInit(): void {
+    this.isLoaded = false;
+
+    this.service
+      .getCostPriceBoughtData()
+      .pipe(takeUntilDestroyed(this))
+      .subscribe((data: any) => {
+        if (data) {
+          this.source = data.tableData.map((item: any) => {
+            return {
+              ...item,
+              isEdit: false,
+            };
+          });
+
+          this.initData(this.source);
+        }
+      });
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.dataSource = new MatTableDataSource(this.source);
+      this.dataSource.paginator = this.paginator;
+
+      this.isLoaded = true;
+      this.totalProduct.emit(this.source.length);
+    });
+  }
+
+  buildForm() {
+    this.form = this.formBuilder.group({
+      costPrice: this.formBuilder.array([]),
+    });
+
+    this.costPriceForm = this.form.get('costPrice') as FormArray;
+  }
+
+  initData(data: Array<any>) {
+    this.costPriceForm.clear();
+    data.forEach((row: any) => {
+      this.addRow(row);
+    });
+  }
+
+  addRow(rowData?: any) {
+    this.pushData(rowData);
+  }
+
+  pushData(rowData: any) {
+    const data = this.formBuilder.group({
+      serialCode: rowData?.serialCode ?? '',
+      code: rowData?.code ?? '',
+      name: rowData?.name ?? '',
+      origin: rowData?.origin ?? '',
+      box: rowData?.box ?? '',
+      kg: rowData?.kg ?? '',
+      q: rowData?.q ?? '',
+      unitCost: rowData?.unitCost ?? '',
+      totalCost: rowData?.totalCost ?? '',
+      branch: rowData?.branch ?? '',
+      date: rowData?.date ?? '',
+      supplier: rowData?.supplier ?? '',
+      amountOwe: rowData?.amountOwe ?? '',
+      tax: rowData?.tax ?? '',
+      category: rowData?.category ?? '',
+    });
+
+    this.costPriceForm.push(data);
+  }
+  
+  sortData(sort: any) {
+    const sortName = sort.active;
+    const sortType = sort.direction;
+  }
+
+  pageChange(event: any){
+    console.log(event);
+  }
+}

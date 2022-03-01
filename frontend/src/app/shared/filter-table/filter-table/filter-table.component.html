@@ -1,0 +1,284 @@
+<form [formGroup]="searchForm" (submit)="onSearch()" class="mb-2">
+  <div class="d-flex align-items-center">
+    <app-menu
+      [columnData]="columnData"
+      (selectedColumn)="onSelectedColumn($event)"
+      (selectedSubColumn)="onSelectedSubColumn($event)"
+    ></app-menu>
+
+    <ng-container
+      *ngIf="selectedFilter && selectedFilter.type === 'list_match'"
+    >
+      <mat-form-field appearance="legacy" class="mx-4">
+        <mat-label>{{ selectedFilter.value }}</mat-label>
+        <mat-select
+          multiple
+          [formControl]="filterList"
+          (selectionChange)="onSelectFilter($event)"
+        >
+          <mat-select-trigger>
+            {{ filterList.value ? filterList.value[0] : "" }}
+            <span
+              *ngIf="filterList.value?.length > 1"
+              class="example-additional-selection"
+            >
+              (+{{ filterList.value.length - 1 }}
+              {{ filterList.value?.length === 2 ? "other" : "others" }})
+            </span>
+          </mat-select-trigger>
+          <mat-option
+            *ngFor="let filter of selectedFilter.triggerFor | async"
+            [value]="filter"
+          >
+            {{ filter }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-container>
+
+    <ng-container *ngIf="selectedFilter && selectedFilter.type === 'search'" >
+      <mat-icon class="mx-4 search-icon" (click)="onSearch()">search</mat-icon>
+      <mat-form-field appearance="legacy">
+        <input
+          matInput
+          #input
+          placeholder="{{ selectedFilter.value }}"
+          formControlName="searchKey"
+        />
+      </mat-form-field>
+    </ng-container>
+
+    <ng-container *ngIf="selectedFilter && selectedFilter.type === 'daterange'">
+      <mat-form-field appearance="legacy" class="mx-4 date-search">
+        <mat-label>{{ "lossPage.enterDateRange" | transloco }}</mat-label>
+
+        <mat-date-range-input [rangePicker]="picker">
+          <input
+            matStartDate
+            formControlName="start_date"
+            placeholder="{{ 'lossPage.startDate' | transloco }}"
+          />
+          <input
+            matEndDate
+            formControlName="end_date"
+            placeholder="{{ 'lossPage.endDate' | transloco }}"
+          />
+        </mat-date-range-input>
+
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+
+        <mat-date-range-picker
+          #picker
+          [restoreFocus]="false"
+        ></mat-date-range-picker>
+
+        <mat-error
+          *ngIf="
+            searchForm.controls.start_date.hasError('matStartDateInvalid')
+          "
+        >
+          {{ "lossPage.invalidStartDate" | transloco }}
+        </mat-error>
+        <mat-error
+          *ngIf="
+            searchForm.controls.end_date.hasError('matEndDateInvalid')
+          "
+        >
+          {{ "lossPage.invalidEndDate" | transloco }}
+        </mat-error>
+      </mat-form-field>
+    </ng-container>
+    
+
+    <button
+      (click)="isOpenDate = !isOpenDate"
+      mat-icon-button
+      type="button"
+      cdkOverlayOrigin
+      #dateTrigger="cdkOverlayOrigin"
+    >
+      <mat-icon color="primary" svgIcon="hn-calendar"></mat-icon>
+    </button>
+
+    <ng-template
+      cdkConnectedOverlay
+      [cdkConnectedOverlayOrigin]="dateTrigger"
+      [cdkConnectedOverlayOpen]="isOpenDate"
+      (overlayOutsideClick)="outsideClickDate($event)"
+    >
+      <ul class="example-list">
+        <li
+          class="item"
+          *ngFor="let date of dateFilter; let i = index"
+          (click)="selectedFilterEvent(date.value)"
+        >
+          {{ date.value }}
+        </li>
+      </ul>
+    </ng-template>
+
+    <button
+      (click)="isOpen = !isOpen"
+      mat-icon-button
+      type="button"
+      cdkOverlayOrigin
+      #trigger="cdkOverlayOrigin"
+    >
+      <mat-icon svgIcon="hn-bars"></mat-icon>
+    </button>
+
+    <ng-template
+      cdkConnectedOverlay
+      [cdkConnectedOverlayOrigin]="trigger"
+      [cdkConnectedOverlayOpen]="isOpen"
+      (overlayOutsideClick)="outsideClick($event)"
+    >
+      <ul class="example-list" formArrayName="items">
+        <li
+          *ngFor="let item of items; let i = index"
+          [formGroupName]="i"
+          class="item"
+          [ngClass]="{ 'list-last-child': i === items.length - 1 }"
+          (click)="selectedFilterEvent(item.value)"
+        >
+          <div *ngIf="item.isEdit && isItemEdit">
+            <input
+              class="edit-item-field"
+              placeholder="Write here"
+              #itemInputField
+              formControlName="value"
+              type="text"
+              (keydown.enter)="addItem()"
+            />
+          </div>
+
+          <span *ngIf="!item.isEdit" class="item-value">
+            {{ item.value !== "" ? item.value : "Write here" }}
+          </span>
+
+          <div *ngIf="i === 0 && isItemEdit" class="add-item">
+            <mat-icon class="icon" color="primary" (click)="addItem()">
+              add
+            </mat-icon>
+          </div>
+
+          <div class="edit-item" *ngIf="isItemEdit">
+            <mat-icon
+              class="icon"
+              color="primary"
+              *ngIf="!item.isEdit"
+              (click)="item.isEdit = !item.isEdit"
+            >
+              edit
+            </mat-icon>
+
+            <mat-icon
+              class="icon"
+              color="primary"
+              *ngIf="item.isEdit"
+              (click)="item.isEdit = !item.isEdit; saveItem()"
+            >
+              save
+            </mat-icon>
+          </div>
+
+          <div *ngIf="i === items.length - 1" class="lock-item">
+            <mat-icon
+              class="icon"
+              *ngIf="!isItemEdit"
+              (click)="isItemEdit = !isItemEdit"
+              >lock</mat-icon
+            >
+            <mat-icon
+              class="icon"
+              *ngIf="isItemEdit"
+              (click)="isItemEdit = !isItemEdit; saveAllItems()"
+              >lock_open</mat-icon
+            >
+          </div>
+        </li>
+      </ul>
+    </ng-template>
+  </div>
+
+  <div class="container-fluid filter-table row align-items-center">
+    <div
+      class="
+        row
+        px-0
+        content-left
+        d-flex
+        align-items-center
+        justify-content-between
+        flex-wrap
+      "
+    >
+      <div class="col-12 col-xxl-9 d-flex align-items-center flex-wrap ps-0">
+        <div class="row p-0 w-100 d-flex align-items-center flex-wrap">
+          <div class="col-12 col-xl-7 p-0">
+            <button
+              type="button"
+              *ngFor="let tableType of tableTypes"
+              class="btn-action btn-{{ tableType.name }}"
+              (click)="onSelectTable(tableType.value)"
+              [ngClass]="{ 'is-selected': selectedTable === tableType.value }"
+            >
+              {{ tableType.name }}
+            </button>
+           
+          </div>
+          <div
+            class="
+              col-12 col-xl-5
+              d-flex
+              align-items-center
+              justify-content-between
+              flex-wrap
+              mb-3 mb-xl-0
+            "
+          >
+            <div class="sort-by" *ngIf="sortByTypes">
+              <div class="me-3">{{ "costPricePage.sortBy" | transloco }}</div>
+              <button
+                type="button"
+                *ngFor="let type of sortByTypes"
+                class="btn-action btn-{{ type.name }}-sort"
+                [ngClass]="{ 'is-selected-sort': selectedSort === type.value }"
+                (click)="onSelectSort(type.value)"
+              >
+                {{ "costPricePage." + type.name | transloco }}
+              </button>
+
+              <button mat-icon-button>
+                <mat-icon color="primary" (click)="onSelectSort()">
+                  reply
+                </mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="
+          col-12
+          flex-wrap
+          d-flex
+          justify-content-end
+          px-0
+          mt-xl-0
+        "
+      >
+        <button class="btn-action btn-print text-white">
+          {{ "lossPage.print" | transloco }}
+        </button>
+        <button class="btn-action btn-excel">
+          {{ "lossPage.excel" | transloco }}
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

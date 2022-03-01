@@ -1,0 +1,155 @@
+<form [formGroup]="productForm" class="product-form p-4">
+  <app-tab-layout>
+    <div title>{{ action }} {{ pageName }}</div>
+
+    <div closeDialog>
+      <button mat-icon-button (click)="closeDialog()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div main>
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field appearance="legacy">
+            <mat-label>
+              {{ "appManagerPage.table.app_name" | transloco }}
+            </mat-label>
+            <input
+              [readonly]="action === 'edit'"
+              matInput
+              formControlName="app_name"
+            />
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy" class="">
+            <mat-label>
+              {{ "appManagerPage.table.category" | transloco }}</mat-label
+            >
+            <input matInput formControlName="category" />
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy">
+            <mat-label>
+              {{ "appManagerPage.table.description" | transloco }}
+            </mat-label>
+            <textarea matInput formControlName="description"></textarea>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+          <mat-form-field appearance="legacy">
+            <mat-label>
+              {{ "appManagerPage.table.locality" | transloco }}
+            </mat-label>
+            <input matInput formControlName="locality" />
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy">
+            <mat-label>
+              {{ "appManagerPage.table.meat" | transloco }}
+            </mat-label>
+            <input matInput formControlName="meat" />
+          </mat-form-field>
+
+          <mat-form-field appearance="legacy">
+            <mat-chip-list #chipList>
+              <mat-chip
+                *ngFor="let unit of units"
+                [selectable]="selectable"
+                [removable]="removable"
+                (removed)="remove(unit)"
+              >
+                {{ unit.value }}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input
+                placeholder="units"
+                [matChipInputFor]="chipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="addOnBlur"
+                #unit
+                (matChipInputTokenEnd)="add($event)"
+              />
+            </mat-chip-list>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="image-upload">
+        <div class="d-flex align-items-center justify-content-between">
+          <label for=""> {{ "appManagerPage.table.image" | transloco }} </label>
+
+          <div class="ms-3">
+            <input
+              type="file"
+              name="file"
+              id="file"
+              multiple
+              class="inputfile"
+              (change)="selectFile($event)"
+              accept="image/png, image/jpg, image/jpeg"
+            />
+
+            <label for="file" class="upload-file" color="primary">
+              <button mat-stroked-button color="primary">
+                <mat-icon>collections</mat-icon>
+                {{ "appManagerPage.table.browseImage" | transloco }}
+              </button>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <mat-progress-bar *ngIf="uploadingAll" mode="indeterminate" class="w-50"></mat-progress-bar>
+
+      <div class="d-flex image-preview-wrapper mt-4">
+        <div
+          *ngFor="let preview of previews; let i = index"
+          class="preview-wrapper me-3"
+        >
+          <button
+            class="remove-image-button mat-elevation-z4"
+            mat-mini-fab
+            color="primary"
+            (click)="removeImage(i)"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+          <img [src]="preview" class="preview" />
+        </div>
+      </div>
+    </div>
+
+    <div action>
+      <button
+        *ngIf="action === 'edit'"
+        mat-flat-button
+        color="primary"
+        class="text-capitalize mx-2"
+        (click)="doAction()"
+      >
+        <mat-icon>save</mat-icon> {{ "appManagerPage.save" | transloco }}
+      </button>
+      <button
+        *ngIf="action === 'add'"
+        mat-flat-button
+        color="primary"
+        class="text-capitalize mx-2"
+        (click)="doAction()"
+      >
+        <mat-icon>add</mat-icon> {{ "appManagerPage.add" | transloco }}
+      </button>
+      <button
+        mat-flat-button
+        color="primary"
+        class="text-capitalize mx-2"
+        (click)="resetAll()"
+        *ngIf="action === 'edit'"
+      >
+        <mat-icon>restart_alt</mat-icon
+        >{{ "appManagerPage.resetAll" | transloco }}
+      </button>
+    </div>
+  </app-tab-layout>
+</form>

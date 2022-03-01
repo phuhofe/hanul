@@ -1,0 +1,35 @@
+<mat-tab-group
+  [selectedIndex]="selected.value"
+  (selectedIndexChange)="onSelectTabIndex($event)"
+>
+  <mat-tab label="{{ 'financePage.' | transloco }}">
+    <div class="type-container p-4">
+      <div class="type" *ngFor="let type of types">
+        <app-finance-search [typeName]="type.name"></app-finance-search>
+        <app-finance-table></app-finance-table>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+
+<!-- <div>
+  <mat-tab-group
+    [color]="'accent'"
+    [backgroundColor]="'accent'"
+    (selectedIndexChange)="onSelectTabIndex($event, 'group1')"
+  >
+    <mat-tab label="First"> Content 1 </mat-tab>
+    <mat-tab label="Second"> Content 2 </mat-tab>
+    <mat-tab label="Third"> Content 3 </mat-tab>
+  </mat-tab-group>
+
+  <mat-tab-group
+    [color]="'primary'"
+    [backgroundColor]="'primary'"
+    (selectedIndexChange)="onSelectTabIndex($event, 'group2')"
+  >
+    <mat-tab label="First"> Content 1 </mat-tab>
+    <mat-tab label="Second"> Content 2 </mat-tab>
+    <mat-tab label="Third"> Content 3 </mat-tab>
+  </mat-tab-group>
+</div> -->

@@ -1,0 +1,218 @@
+<form [formGroup]="searchForm" (submit)="onSearch()">
+  <div class="d-flex align-items-center">
+    <app-menu
+      [columnData]="columnData"
+      (selectedColumn)="onSelectedColumn($event)"
+    ></app-menu>
+
+    <mat-icon class="mx-3">search</mat-icon>
+    <mat-form-field appearance="legacy">
+      <input
+        matInput
+        #input
+        placeholder="{{ 'payableReceivablePage.searchProduct' | transloco }}"
+        formControlName="searchKey"
+      />
+    </mat-form-field>
+
+    <button
+      (click)="isOpenDate = !isOpenDate"
+      mat-icon-button
+      type="button"
+      cdkOverlayOrigin
+      #dateTrigger="cdkOverlayOrigin"
+    >
+      <mat-icon color="primary" svgIcon="hn-calendar"></mat-icon>
+    </button>
+
+    <ng-template
+      cdkConnectedOverlay
+      [cdkConnectedOverlayOrigin]="dateTrigger"
+      [cdkConnectedOverlayOpen]="isOpenDate"
+      (overlayOutsideClick)="outsideClickDate($event)"
+    >
+      <ul class="example-list">
+        <li
+          class="item"
+          *ngFor="let date of dateFilter; let i = index"
+          (click)="selectedFilterEvent(date.value)"
+        >
+          {{ date.value }}
+        </li>
+      </ul>
+    </ng-template>
+
+    <button
+      (click)="isOpen = !isOpen"
+      mat-icon-button
+      type="button"
+      cdkOverlayOrigin
+      #trigger="cdkOverlayOrigin"
+    >
+      <mat-icon svgIcon="hn-bars"></mat-icon>
+    </button>
+
+    <ng-template
+      cdkConnectedOverlay
+      [cdkConnectedOverlayOrigin]="trigger"
+      [cdkConnectedOverlayOpen]="isOpen"
+      (overlayOutsideClick)="outsideClick($event)"
+    >
+      <ul class="example-list" formArrayName="items">
+        <li
+          *ngFor="let item of items; let i = index"
+          [formGroupName]="i"
+          class="item"
+          [ngClass]="{ 'list-last-child': i === items.length - 1 }"
+          (click)="selectedFilterEvent(item.value)"
+        >
+          <div *ngIf="item.isEdit && isItemEdit">
+            <input
+              class="edit-item-field"
+              placeholder="Write here"
+              #itemInputField
+              formControlName="value"
+              type="text"
+              (keydown.enter)="addItem()"
+            />
+          </div>
+
+          <span *ngIf="!item.isEdit" class="item-value">
+            {{ item.value !== "" ? item.value : "Write here" }}
+          </span>
+
+          <div *ngIf="i === 0 && isItemEdit" class="add-item">
+            <mat-icon class="icon" color="primary" (click)="addItem()"
+              >add</mat-icon
+            >
+          </div>
+
+          <div class="edit-item" *ngIf="isItemEdit">
+            <mat-icon
+              class="icon"
+              color="primary"
+              *ngIf="!item.isEdit"
+              (click)="item.isEdit = !item.isEdit"
+            >
+              edit
+            </mat-icon>
+            
+            <mat-icon
+              class="icon"
+              color="primary"
+              *ngIf="item.isEdit"
+              (click)="item.isEdit = !item.isEdit; saveItem()"
+            >
+              save
+            </mat-icon>
+          </div>
+
+          <div *ngIf="i === items.length - 1" class="lock-item">
+            <mat-icon
+              class="icon"
+              *ngIf="!isItemEdit"
+              (click)="isItemEdit = !isItemEdit"
+              >lock</mat-icon
+            >
+            <mat-icon
+              class="icon"
+              *ngIf="isItemEdit"
+              (click)="isItemEdit = !isItemEdit; saveAllItems()"
+              >lock_open</mat-icon
+            >
+          </div>
+        </li>
+      </ul>
+    </ng-template>
+
+    <ng-container *ngIf="selectedTable === PayableReceivableType.COMPARATIVE">
+      <button
+        (click)="isOpenLocation = !isOpenLocation"
+        mat-icon-button
+        type="button"
+        cdkOverlayOrigin
+        #locationTrigger="cdkOverlayOrigin"
+      >
+        <mat-icon color="primary" svgIcon="hn-location"></mat-icon>
+      </button>
+
+      <ng-template
+        cdkConnectedOverlay
+        [cdkConnectedOverlayOrigin]="locationTrigger"
+        [cdkConnectedOverlayOpen]="isOpenLocation"
+        (overlayOutsideClick)="outsideClickLocation($event)"
+      >
+        <ul class="example-list">
+          <li
+            class="item"
+            *ngFor="let location of locationFilter; let i = index"
+            (click)="selectedFilterEvent(location.value)"
+          >
+            {{ location.value }}
+          </li>
+        </ul>
+      </ng-template>
+    </ng-container>
+  </div>
+
+  <div class="filter-table row align-items-center">
+    <div class="content-left col-12 col-xxl-9 flex-wrap">
+      <div class=" w-100">
+        <button
+        type="button"
+        *ngFor="let tableType of tableTypes"
+        class="btn-{{ tableType.name }}"
+        [ngClass]="{ 'is-selected': selectedTable === tableType.value }"
+        (click)="onSelectTable(tableType.value)"
+      >
+        {{ "payableReceivablePage." + tableType.name | transloco }}
+      </button>
+
+      <mat-form-field appearance="legacy" class="date-search">
+        <mat-label>{{ "orderPage.enterDateRange" | transloco }}</mat-label>
+
+        <mat-date-range-input [rangePicker]="picker">
+          <input
+            matStartDate
+            formControlName="start_date"
+            placeholder="{{ 'payableReceivablePage.startDate' | transloco }}"
+          />
+          <input
+            matEndDate
+            formControlName="end_date"
+            placeholder="{{ 'payableReceivablePage.endDate' | transloco }}"
+          />
+        </mat-date-range-input>
+
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+
+        <mat-date-range-picker
+          #picker
+          [restoreFocus]="false"
+        ></mat-date-range-picker>
+
+        <mat-error
+          *ngIf="searchForm.controls.start_date.hasError('matStartDateInvalid')"
+        >
+          {{ "orderPage.invalidStartDate" | transloco }}
+        </mat-error>
+        <mat-error
+          *ngIf="searchForm.controls.end_date.hasError('matEndDateInvalid')"
+        >
+          {{ "orderPage.invalidEndDate" | transloco }}
+        </mat-error>
+      </mat-form-field>
+      </div>
+ 
+    </div>
+
+    <div class="content-right mb-2 pe-0 col-12 col-xxl-3 flex-wrap justify-content-sm-start">
+      <button class="btn-print text-white">
+        {{ "payableReceivablePage.print" | transloco }}
+      </button>
+      <button class="btn-excel">
+        {{ "payableReceivablePage.excel" | transloco }}
+      </button>
+    </div>
+  </div>
+</form>

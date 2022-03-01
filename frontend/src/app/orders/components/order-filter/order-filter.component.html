@@ -1,0 +1,60 @@
+<mat-card class="mt-3 mat-elevation-z4">
+  <div class="d-flex">
+    <div class="d-flex flex-column">
+      <div>
+        <button class="table-type me-2" mat-raised-button>total</button>
+        <button class="table-type" mat-raised-button>restaurant</button>
+      </div>
+      <div class="mt-2">
+        <button class="table-type me-2" mat-raised-button>butcher</button>
+        <button class="table-type" mat-raised-button>mart</button>
+      </div>
+    </div>
+
+    <div class="ms-3">
+      <mat-card class="calendar-card mat-elevation-z3">
+        <mat-card-title class="calendar-title"><b>Date</b></mat-card-title>
+        <mat-calendar (selectedChange)="selected = $event"></mat-calendar>
+      </mat-card>
+    </div>
+
+    <div class="ms-3">
+      <p class="text-center"><b>Show</b></p>
+      <div class="d-flex">
+        <div>
+          <p><mat-checkbox color="primary">new</mat-checkbox></p>
+          <p><mat-checkbox color="primary">today</mat-checkbox></p>
+          <p><mat-checkbox color="primary">keep</mat-checkbox></p>
+        </div>
+        <div class="ms-3">
+          <p><mat-checkbox color="primary">incomplete</mat-checkbox></p>
+          <p><mat-checkbox color="primary">processing</mat-checkbox></p>
+          <p><mat-checkbox color="primary">complete</mat-checkbox></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ms-3">
+      <select class="form-select">
+        <option selected>Sortby</option>
+        <option *ngFor="let option of sortByOptions" [value]="option.value">
+          {{ option.viewValue }}
+        </option>
+      </select>
+
+    </div>
+
+    <div class="ms-3 d-flex flex-column">
+      <div>
+        <button class="table-type" mat-raised-button>+ Tab</button>
+        <button class="table-type mx-2" mat-raised-button>Excel</button>
+        <button class="table-type" mat-raised-button>Print</button>
+      </div>
+      <div class="mt-2">
+        <button class="table-type" mat-raised-button>Office</button>
+        <button class="table-type mx-2" mat-raised-button>Keep</button>
+        <button class="table-type" mat-raised-button>Complete</button>
+      </div>
+    </div>
+  </div>
+</mat-card>

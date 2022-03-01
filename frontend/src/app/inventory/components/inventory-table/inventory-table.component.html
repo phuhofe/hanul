@@ -1,0 +1,272 @@
+<div>
+  <div class="add-row-button">
+    <button
+      class="ms-4"
+      mat-mini-fab
+      color="primary"
+      color="primary"
+      (click)="onAddInventory()"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <form [formGroup]="form" (submit)="updateRowData(selectedStockId)">
+    <div class="table-component">
+      <table
+        mat-table
+        class="manager-table"
+        formArrayName="inventory"
+        [dataSource]="dataSource"
+        matSort
+        (matSortChange)="sortData($event)"
+        matSortActive="business_no"
+        matSortDirection="asc"
+        matSortDisableClear
+      >
+        <ng-container matColumnDef="sku">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "inventoryPage.table.sku" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{ inventoryForm.controls[rowIndex].value.sku }}
+            </div>
+            <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+              <input style="width: 80px" formControlName="sku" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="supplier">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "inventoryPage.table.supplier" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{ inventoryForm.controls[rowIndex].value.supplier }}
+            </div>
+            <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+              <input style="width: 80px" formControlName="supplier" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "inventoryPage.table.date" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{
+                inventoryForm.controls[rowIndex].value.date
+                  | date: "dd/MM/yyyy HH:mm:ss"
+              }}
+            </div>
+            <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+              <input style="width: 80px" formControlName="date" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="date_bought">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "inventoryPage.table.date_bought" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{
+                inventoryForm.controls[rowIndex].value.date_bought
+                  | date: "dd/MM/yyyy HH:mm:ss"
+              }}
+            </div>
+            <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+              <input style="width: 80px" formControlName="date_bought" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="stock_boxes">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "inventoryPage.table.stock_boxes" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{ inventoryForm.controls[rowIndex].value.stock_boxes }}
+            </div>
+            <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+              <input style="width: 80px" formControlName="stock_boxes" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="stock_kg">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "inventoryPage.table.stock_kg" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{ inventoryForm.controls[rowIndex].value.stock_kg }}
+            </div>
+            <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+              <input style="width: 80px" formControlName="stock_kg" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="serial_no">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "inventoryPage.table.serial_no" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{ inventoryForm.controls[rowIndex].value.serial_no }}
+            </div>
+            <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+              <input style="width: 80px" formControlName="serial_no" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="notes">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "inventoryPage.table.notes" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{ inventoryForm.controls[rowIndex].value.notes }}
+            </div>
+            <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+              <input style="width: 80px" formControlName="notes" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="created">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "inventoryPage.table.created" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{
+                inventoryForm.controls[rowIndex].value.created
+                  | date: "dd/MM/yyyy HH:mm:ss"
+              }}
+            </div>
+            <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+              <input style="width: 80px" formControlName="created" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="updated">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "inventoryPage.table.updated" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{
+                inventoryForm.controls[rowIndex].value.updated
+                  | date: "dd/MM/yyyy HH:mm:ss"
+              }}
+            </div>
+            <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+              <input style="width: 80px" formControlName="updated" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container *ngIf="editable" matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+
+          <td
+            mat-cell
+            *matCellDef="let product; let i = index"
+            class="action-link"
+          >
+            <button
+              *ngIf="!product.isEdit"
+              mat-icon-button
+              type="button"
+              color="primary"
+              aria-label="Edit inline"
+              (click)="
+                product.isEdit = true; selectedStockId = product.stock_id
+              "
+              matTooltip="수정"
+            >
+              <mat-icon
+                color="primary"
+                class="edit-row-icon"
+                matTooltip="Edit inline"
+              >
+                drive_file_rename_outline
+              </mat-icon>
+            </button>
+
+            <button
+              *ngIf="product.isEdit"
+              mat-icon-button
+              type="button"
+              color="primary"
+              type="submit"
+              matTooltip="Save"
+              (click)="product.isEdit = false; updateRowData(product.stock_id)"
+            >
+              <mat-icon class="edit-row-icon" color="primary" matTooltip="Save">
+                save
+              </mat-icon>
+            </button>
+
+            <button
+              (click)="onEditInventoryTab(product)"
+              mat-icon-button
+              type="button"
+              color="primary"
+              aria-label="Edit row"
+              matTooltip="수정"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button
+              (click)="onDelete(product.stock_id)"
+              mat-icon-button
+              color="warn"
+              type="button"
+              aria-label="Delete row"
+              matTooltip="삭제"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <th
+          mat-header-row
+          *matHeaderRowDef="columnsToDisplay; sticky: true"
+        ></th>
+        <td
+          mat-row
+          class="table-row"
+          matRipple
+          *matRowDef="let row; columns: columnsToDisplay"
+        ></td>
+      </table>
+    </div>
+  </form>
+  <div class="no-data" *ngIf="totalResult === 0">
+    <img
+      src="https://ringxe.vn/static/imgs/nodata-found.png"
+      alt="No data found"
+    />
+  </div>
+
+  <mat-paginator
+    [length]="totalResult"
+    [pageSize]="20"
+    [pageSizeOptions]="[20, 50, 100]"
+    (page)="pageChange($event)"
+    showFirstLastButtons
+  >
+  </mat-paginator>
+</div>

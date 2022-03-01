@@ -1,0 +1,458 @@
+<div class="p-2">
+  <form [formGroup]="form">
+    <div class="table-component">
+      <table
+        mat-table
+        matSort
+        [dataSource]="dataSource"
+        formArrayName="costPrice"
+        class="w-100 bg-transparent"
+        multiTemplateDataRows
+        (matSortChange)="sortData($event)"
+      >
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef class="checkbox">
+            <mat-checkbox
+              class="pe-3"
+              color="primary"
+              (change)="$event ? masterToggle() : null"
+            >
+            </mat-checkbox>
+          </th>
+
+          <td mat-cell *matCellDef="let row" class="checkbox">
+            <mat-checkbox
+              class="pe-3"
+              color="primary"
+              (click)="$event.stopPropagation()"
+              (change)="$event ? selection.toggle(row) : null"
+            >
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="serialCode">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            class="custom-th"
+          >
+            {{ "costPricePage.table.serialCode" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div
+              *ngIf="!element.isEdit"
+              [ngClass]="{ 'd-none': type === typeEnum.CUSTOMER }"
+            >
+              {{ costPriceForm.controls[element.id].value.serialCode }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input" formControlName="serialCode" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="code">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "costPricePage.table.code" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div
+              *ngIf="!element.isEdit"
+              [ngClass]="{ 'd-none': type === typeEnum.CUSTOMER }"
+            >
+              {{ costPriceForm.controls[element.id].value.code }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input" formControlName="code" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "costPricePage.table.name" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div
+              *ngIf="!element.isEdit"
+              [ngClass]="{ 'd-none': type === typeEnum.CUSTOMER }"
+            >
+              {{ costPriceForm.controls[element.id].value.name }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input" formControlName="name" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="origin">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "costPricePage.table.origin" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div
+              *ngIf="!element.isEdit"
+              [ngClass]="{ 'd-none': type === typeEnum.CUSTOMER }"
+            >
+              {{ costPriceForm.controls[element.id].value.origin }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input" formControlName="origin" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="box">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "costPricePage.table.box" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div
+              *ngIf="!element.isEdit"
+              [ngClass]="{ 'd-none': type === typeEnum.CUSTOMER }"
+            >
+              {{ costPriceForm.controls[element.id].value.box }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input" formControlName="box" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="kg">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "costPricePage.table.kg" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div
+              *ngIf="!element.isEdit"
+              [ngClass]="{ 'd-none': type === typeEnum.CUSTOMER }"
+            >
+              {{ costPriceForm.controls[element.id].value.kg }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input" formControlName="kg" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="q">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "costPricePage.table.q" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div
+              *ngIf="!element.isEdit"
+              [ngClass]="{ 'd-none': type === typeEnum.CUSTOMER }"
+            >
+              {{ costPriceForm.controls[element.id].value.q }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input" formControlName="q" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="unitPrice">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            class="custom-th"
+          >
+            {{ "costPricePage.table.unitPrice" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div
+              *ngIf="!element.isEdit"
+              [ngClass]="{ 'd-none': type === typeEnum.CUSTOMER }"
+            >
+              {{ costPriceForm.controls[element.id].value.unitPrice }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input" formControlName="unitPrice" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="totalPrice">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            class="custom-th"
+          >
+            {{ "costPricePage.table.totalPrice" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div
+              *ngIf="!element.isEdit"
+              [ngClass]="{ 'd-none': type === typeEnum.CUSTOMER }"
+            >
+              {{ costPriceForm.controls[element.id].value.totalPrice }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input" formControlName="totalPrice" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="branch">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "costPricePage.table.branch" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div
+              *ngIf="!element.isEdit"
+              [ngClass]="{ 'd-none': type === typeEnum.CUSTOMER }"
+            >
+              {{ costPriceForm.controls[element.id].value.branch }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input" formControlName="branch" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "costPricePage.table.date" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div
+              *ngIf="!element.isEdit"
+              [ngClass]="{ 'd-none': type === typeEnum.CUSTOMER }"
+            >
+              {{
+                costPriceForm.controls[element.id]?.value?.date
+                  | date: "dd/MM/yyyy HH:mm:ss"
+              }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <mat-form-field
+                appearance="legacy"
+                class="implemented-date-picker"
+              >
+                <input
+                  matInput
+                  formControlName="date"
+                  [matDatepicker]="picker"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="customer">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ "costPricePage.table.customer" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{ costPriceForm.controls[element.id].value.customer }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input" formControlName="customer" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="receivable">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            class="custom-th"
+            mat-sort-header
+          >
+            Receivable
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{ costPriceForm.controls[element.id].value.receivable }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input" formControlName="receivable" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="tax">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Tax</th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div
+              *ngIf="!element.isEdit"
+              [ngClass]="{ 'd-none': type === typeEnum.CUSTOMER }"
+            >
+              {{ costPriceForm.controls[element.id].value.tax }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input" formControlName="tax" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div
+              *ngIf="!element.isEdit"
+              [ngClass]="{ 'd-none': type === typeEnum.CUSTOMER }"
+            >
+              {{ costPriceForm.controls[element.id].value.category }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input" formControlName="category" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td
+            mat-cell
+            *matCellDef="let element; let rowIndex = index"
+            class="text-center pe-0"
+          >
+            <div class="d-flex">
+              <button
+                mat-icon-button
+                type="button"
+                matTooltip="수정"
+                (click)="$event.stopPropagation(); element.isEdit = false"
+              >
+                <mat-icon svgIcon="hn-save"></mat-icon>
+              </button>
+
+              <button
+                mat-icon-button
+                type="button"
+                matTooltip="inline edit"
+                (click)="$event.stopPropagation(); element.isEdit = true"
+              >
+                <mat-icon svgIcon="hn-edit"></mat-icon>
+              </button>
+
+              <button mat-icon-button type="button" matTooltip="수정">
+                <mat-icon svgIcon="hn-delete"></mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+          <td
+            mat-cell
+            *matCellDef="let element"
+            [attr.colspan]="17"
+            class="p-0 ex pand-cell border-none"
+          >
+            <div
+              class="data-detail w-100 bg-white"
+              [ngClass]="{ 'd-none border-none': !checkExpanded(element) }"
+            >
+              <app-sold-expanded [type]="type"></app-sold-expanded>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          class="table-row"
+          *matRowDef="let row; let element; columns: displayedColumns"
+          (click)="pushPopElement(element)"
+          [class.selected-row]="checkExpanded(element)"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="let element; columns: ['expandedDetail']"
+          class="detail-row border-none"
+          [@detailExpand]="checkExpanded(element) ? 'expanded' : 'collapsed'"
+        ></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+            No data
+          </td>
+        </tr>
+      </table>
+    </div>
+  </form>
+
+  <app-loading-table [isLoaded]="isLoaded"></app-loading-table>
+
+  <mat-paginator
+    [pageSizeOptions]="[10, 20, 50, 100]"
+    showFirstLastButtons
+    aria-label="Select page of periodic elements"
+    (page)="pageChange($event)"
+  >
+  </mat-paginator>
+</div>

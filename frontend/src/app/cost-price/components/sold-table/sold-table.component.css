@@ -1,0 +1,28 @@
+table {
+  width: 100%;
+}
+
+th {
+  font-weight: bold;
+  min-width: 40px;
+}
+
+.custom-th {
+  min-width: 70px;
+}
+
+.border-none {
+  border: none;
+}
+
+.implemented-date-picker {
+  width: 120px;
+}
+
+.checkbox {
+  max-width: 5%;
+}
+
+.table-component {
+  overflow-x: auto;
+}

@@ -1,0 +1,170 @@
+.search {
+  display: flex;
+  align-items: center;
+}
+
+.filter-table .content-left {
+  display: flex;
+  align-items: center;
+}
+
+.filter-table .content-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.btn-detail,
+.btn-total,
+.btn-comparative,
+.btn-history,
+.btn-print,
+.btn-excel {
+  border: none;
+  height: 26px;
+  font-size: 14px;
+  min-width: 88px;
+  margin-left: 14px;
+  transition: .3s;
+  color: #000000;
+}
+
+.btn-total {
+  background-color: #cea6f5;
+}
+
+.btn-detail {
+  background-color: #fad180;
+}
+
+.btn-comparative {
+  background-color: #a2dbfa;
+}
+
+.btn-history {
+  background-color: #fba9ab;
+}
+
+.date-search {
+  margin-left: 14px;
+}
+
+.btn-print {
+  width: 88px;
+  height: 26px;
+  background: #25274d;
+}
+
+.btn-excel {
+  width: 88px;
+  height: 26px;
+  background: #f68383;
+}
+
+.is-selected{
+  background-color: #B9B9B9;
+  color: white;
+}
+
+
+
+
+
+.example-list {
+  width: 100px;
+  border: solid 1px #ccc;
+  border-radius: 5px;
+  background: #fff;
+  text-align: left;
+  padding: 10px;
+  margin: 0;
+}
+
+.example-list > li {
+  list-style-type: none;
+  border-bottom: solid 1px #8b8b8b;
+  padding: 8px 0;
+}
+
+.example-list > li:last-child {
+  border-bottom: none;
+}
+
+
+.example-sub {
+  width: 100px;
+  border: solid 1px #ccc;
+  border-radius: 5px;
+  background: #fff;
+  text-align: left;
+  padding: 10px;
+  margin: 0;
+}
+
+.example-sub > li {
+  list-style-type: none;
+  border-bottom: solid 1px #8b8b8b;
+  padding: 8px 0;
+}
+
+
+
+.list-result {
+  display: flex;
+  align-items: center;
+}
+
+
+.product-search {
+  padding: .2rem;
+  height: 26px;
+  border-radius: 5px;
+  border: 1px solid #f68383;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-right: 1rem;
+}
+
+.product_search p {
+  color: #f68383;
+  margin-bottom: 0;
+  padding: .5rem;
+}
+
+.remove {
+  display: inline-block;
+  font-weight: normal;
+  font-size: 14px;
+  color: #474747;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.clear-all {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-decoration-line: underline;
+  color: #f68383;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.table {
+  background: #f6f6f6;
+  border-radius: 2rem;
+}
+
+.total-result {
+  font-size: 24px;
+}
+
+.loading-table {
+  height: 500px;
+}
+
+.clear-search-key {
+  cursor: pointer;
+}

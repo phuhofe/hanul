@@ -1,0 +1,12 @@
+.push-notification-wrapper {
+  width: 500px;
+}
+
+.tab-title {
+  text-transform: capitalize;
+  font-size: 20px;
+}
+
+.message {
+  line-height: 2rem;
+}

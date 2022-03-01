@@ -1,0 +1,10 @@
+<div>
+  <mat-spinner [diameter]="'50'" *ngIf="loading"></mat-spinner>
+</div>
+
+<img
+  class="img-fluid img-thumbnail product-image"
+  [hidden]="loading"
+  (load)="onLoad()"
+  [src]="imageSrc"
+/>

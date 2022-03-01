@@ -1,0 +1,12 @@
+.dialog-title {
+  font-size: 20px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.action{
+  display: flex;
+  justify-content: flex-end;
+}

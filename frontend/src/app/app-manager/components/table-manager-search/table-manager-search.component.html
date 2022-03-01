@@ -1,0 +1,31 @@
+<div class="table-search">
+  <div class="ml-5 d-flex align-items-center search-field">
+    <button
+      mat-mini-fab
+      color="primary"
+      class="me-3 mat-elevation-z0"
+      (click)="search(input.value)"
+    >
+      <mat-icon>search</mat-icon>
+    </button>
+
+    <mat-form-field class="search">
+      <input
+        (keyup.enter)="search(input.value)"
+        matInput
+        placeholder="{{ 'appManagerPage.' + searchPlaceholder | transloco }}"
+        #input
+      />
+    </mat-form-field>
+  </div>
+</div>
+
+<button
+  *ngIf="selectedTable === 'product'"
+  class="mx-5 add-button"
+  mat-mini-fab
+  color="primary"
+  (click)="onAddItem()"
+>
+  <mat-icon>add</mat-icon>
+</button>

@@ -1,0 +1,35 @@
+.manager-table {
+  background-color: #f6f6f6;
+}
+.no-data {
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  flex-direction: column;
+  background-color: #fafafa; 
+  padding: 5rem;
+  height: 75vh;
+}
+
+.hide-progress-bar {
+  height: 4px;
+  width: 100%;
+  padding: 0;
+}
+
+.header-cell {
+  color: var(--hanul-primary);
+}
+
+.table-row {
+  border-bottom: 0;
+}
+
+.list-group {
+  width: 250px;
+}
+
+.list-group-item {
+  padding: 0.5rem 0;
+  background-color: #d7d3d3;
+}

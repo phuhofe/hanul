@@ -1,0 +1,44 @@
+.app-splash-screen {
+  transition: left 0.5s;
+}
+
+#splash-screen {
+  width: 100%;
+  height: 100%;
+  display: none;
+  opacity: 0;
+  transition: all 400ms ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--hanul-primary);
+  z-index: 99999;
+  pointer-events: none;
+  justify-content: center;
+  align-content: center;
+}
+
+#splash-screen.show {
+  opacity: 1;
+  display: flex;
+}
+
+#splash-screen .center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+#splash-screen .logo {
+  height: 180px;
+  width: 180px;
+  margin-bottom: 8px;
+}
+
+#splash-screen .logo img {
+  max-height: 100%;
+  filter: drop-shadow(0px 6px 6px rgba(0, 0, 0, 0.2))
+}

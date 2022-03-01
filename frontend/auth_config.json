@@ -1,0 +1,6 @@
+{
+    "domain": "dev-lucai.au.auth0.com",
+    "clientId": "EEHWTKBCHkWhSLv8m6cosrT0cuCHMfwt",
+    "audience": "https://52.231.35.207/",
+    "serverUrl": "http://52.231.35.207/dev/v1"
+}

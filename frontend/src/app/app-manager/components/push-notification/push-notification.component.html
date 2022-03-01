@@ -1,0 +1,29 @@
+<form class="push-notification-wrapper p-4" [formGroup]="pushNotificationForm">
+  <app-tab-layout>
+    <div title>{{"appManagerPage.pushNotification" | transloco }}</div>
+
+    <div main>
+      <div>
+        <mat-form-field appearance="legacy" class="w-100">
+          <mat-label>{{"appManagerPage.title" | transloco }}</mat-label>
+          <input matInput formControlName="title" />
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field appearance="legacy" class="w-100">
+          <mat-label>{{"appManagerPage.message" | transloco }}</mat-label>
+          <textarea
+            class="message"
+            rows="10"
+            matInput
+            formControlName="body"
+          ></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    <div action>
+      <button mat-flat-button color="primary" (click)="push()">{{"appManagerPage.push" | transloco }}</button>
+    </div>
+  </app-tab-layout>
+</form>

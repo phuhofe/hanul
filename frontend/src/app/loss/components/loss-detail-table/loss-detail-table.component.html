@@ -1,0 +1,450 @@
+<div class="p-2">
+  <form [formGroup]="form">
+    <div class="table-component">
+      <table
+        mat-table
+        matSort
+        [dataSource]="dataSource"
+        formArrayName="loss"
+        class="w-100 bg-transparent"
+        multiTemplateDataRows
+        (matSortChange)="sortData($event)"
+      >
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef class="d-none"></th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox
+              color="primary"
+              (click)="$event.stopPropagation()"
+              (change)="$event ? selection.toggle(row) : null"
+              [checked]="selection.isSelected(row)"
+            >
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="select1">
+          <th mat-header-cell *matHeaderCellDef rowspan="2">
+            <mat-checkbox
+              color="primary"
+              (change)="$event ? masterToggle() : null"
+              [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()"
+            >
+            </mat-checkbox>
+          </th>
+        </ng-container>
+
+        <ng-container matColumnDef="original">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            [attr.colspan]="3"
+            class="th-top"
+          >
+            {{ "lossPage.lossDetailTable.original" | transloco }}
+          </th>
+        </ng-container>
+
+        <ng-container matColumnDef="original_code">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            {{ "lossPage.lossDetailTable.original_code" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; index as i">
+            <div *ngIf="!element.isEdit">
+              {{ lossForm.controls[element.id].value.originalCode }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input inline-edit-input" formControlName="originalCode" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="original_name">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            {{ "lossPage.lossDetailTable.original_name" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{ lossForm.controls[element.id].value.originalName }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input inline-edit-input" formControlName="originalName" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="original_origin">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            {{ "lossPage.lossDetailTable.original_origin" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{ lossForm.controls[element.id].value.originalOrigin }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input inline-edit-input" formControlName="originalOrigin" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="product">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            [attr.colspan]="3"
+            class="th-top"
+          >
+            {{ "lossPage.lossDetailTable.product" | transloco }}
+          </th>
+        </ng-container>
+
+        <ng-container matColumnDef="product_code">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            {{ "lossPage.lossDetailTable.product_code" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{ lossForm.controls[element.id].value.productCode }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input
+                class="cell-input inline-edit-input"
+                formControlName="productCode"
+              />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="product_name">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            {{ "lossPage.lossDetailTable.product_name" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{ lossForm.controls[element.id].value.productName }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input inline-edit-input" formControlName="productName" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="product_origin">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            {{ "lossPage.lossDetailTable.product_origin" | transloco }}
+          </th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{ lossForm.controls[element.id].value.productOrigin }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input inline-edit-input" formControlName="productOrigin" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="loss">
+          <th mat-header-cell *matHeaderCellDef class="d-none"></th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{ lossForm.controls[element.id].value.loss }} %
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input inline-edit-input" formControlName="loss" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="loss1">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            rowspan="2"
+            mat-sort-header
+          >
+            {{ "lossPage.lossDetailTable.loss" | transloco }}
+          </th>
+        </ng-container>
+
+        <ng-container matColumnDef="branch">
+          <th mat-header-cell *matHeaderCellDef class="d-none"></th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{ lossForm.controls[element.id].value.branch }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input inline-edit-input" formControlName="branch" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="branch1">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            rowspan="2"
+            mat-sort-header
+          >
+            {{ "lossPage.lossDetailTable.branch" | transloco }}
+          </th>
+        </ng-container>
+
+        <ng-container matColumnDef="amountLost">
+          <th mat-header-cell *matHeaderCellDef class="d-none"></th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit" class="ps-3">
+              {{ lossForm.controls[element.id].value.amountLost }} kg
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input inline-edit-input" formControlName="amountLost" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amountLost1">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            rowspan="2"
+            mat-sort-header
+          >
+            {{ "lossPage.lossDetailTable.amountLost" | transloco }}
+          </th>
+        </ng-container>
+
+        <ng-container matColumnDef="implementedDate">
+          <th mat-header-cell *matHeaderCellDef class="d-none"></th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit">
+              {{
+                lossForm.controls[element.id]?.value?.implementedDate
+                  | date: "dd/MM/yyyy HH:mm:ss"
+              }}
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <mat-form-field
+                appearance="legacy"
+                class="implemented-date-picker"
+              >
+                <input
+                  matInput
+                  formControlName="implementedDate"
+                  [matDatepicker]="picker"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="implementedDate1">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            rowspan="2"
+            mat-sort-header
+          >
+            {{ "lossPage.lossDetailTable.implementedDate" | transloco }}
+          </th>
+        </ng-container>
+
+        <ng-container matColumnDef="productMade">
+          <th mat-header-cell *matHeaderCellDef class="d-none"></th>
+          <td mat-cell *matCellDef="let element; let rowIndex = index">
+            <div *ngIf="!element.isEdit" class="ps-3">
+              {{ lossForm.controls[element.id].value.productMade }} kg
+            </div>
+            <div
+              *ngIf="element.isEdit"
+              [formGroupName]="element.id"
+              (click)="$event.stopPropagation()"
+            >
+              <input class="cell-input inline-edit-input" formControlName="productMade" />
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="productMade1">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            rowspan="2"
+            mat-sort-header
+          >
+            {{ "lossPage.lossDetailTable.productMade" | transloco }}
+          </th>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef class="d-none"></th>
+          <td
+            mat-cell
+            *matCellDef="let element; let rowIndex = index"
+            class="text-center pe-0"
+          >
+            <button
+              mat-icon-button
+              type="button"
+              matTooltip="수정"
+              (click)="$event.stopPropagation(); element.isEdit = false"
+            >
+              <mat-icon svgIcon="hn-save"></mat-icon>
+            </button>
+
+            <button
+              mat-icon-button
+              type="button"
+              matTooltip="inline edit"
+              (click)="$event.stopPropagation(); element.isEdit = true"
+            >
+              <mat-icon svgIcon="hn-edit"></mat-icon>
+            </button>
+
+            <button mat-icon-button type="button" matTooltip="수정">
+              <mat-icon svgIcon="hn-delete"></mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action1">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            rowspan="2"
+            class="text-center pe-0"
+          >
+            action
+          </th>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+          <td
+            mat-cell
+            *matCellDef="let element"
+            [attr.colspan]="13"
+            class="p-0 expand-cell border-none"
+          >
+            <div
+              class="data-detail w-100 bg-white"
+              [ngClass]="{ 'd-none border-none': !checkExpanded(element) }"
+            >
+              <app-lost-detail-expanded-table></app-lost-detail-expanded-table>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="[
+            'select1',
+            'original',
+            'product',
+            'loss1',
+            'branch1',
+            'amountLost1',
+            'implementedDate1',
+            'productMade1',
+            'action1'
+          ]"
+        ></tr>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          mat-row
+          class="table-row"
+          *matRowDef="let row; let element; columns: displayedColumns"
+          (click)="pushPopElement(element)"
+          [class.selected-row]="checkExpanded(element)"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="let element; columns: ['expandedDetail']"
+          class="detail-row border-none"
+          [@detailExpand]="checkExpanded(element) ? 'expanded' : 'collapsed'"
+        ></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="13">No data</td>
+        </tr>
+      </table>
+    </div>
+  </form>
+
+  <app-loading-table [isLoaded]="isLoaded"> </app-loading-table>
+
+  <mat-paginator
+    [pageSizeOptions]="[10, 20, 50, 100]"
+    showFirstLastButtons
+    class="bg-transparent"
+    (page)="pageChange($event)"
+  >
+  </mat-paginator>
+</div>

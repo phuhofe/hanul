@@ -1,0 +1,20 @@
+.manager {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.developing {
+  color: var(--hanul-primary);
+  text-align: center;
+  padding: 2rem 0 1rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  border-bottom: 4px solid var(--hanul-primary);
+}
+
+.img-developing {
+  width: 65%;
+  margin-top: 2rem;
+}

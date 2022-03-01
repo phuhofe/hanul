@@ -1,0 +1,127 @@
+.spinner-container {
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  flex-direction: column;
+  background-color: #f6f6f6; 
+  height: 75vh;
+}
+
+.loading-label {
+  margin-top: 1rem;
+}
+
+.table-row:hover {
+  cursor: pointer;
+  background: #f0f0f0;
+}
+
+ .page-name {
+  text-transform: capitalize;
+}
+
+.no-data {
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  flex-direction: column;
+  background-color: #fafafa; 
+  padding: 5rem;
+  height: 75vh;
+}
+
+.add-button {
+  position: absolute;
+  right: 1rem;
+  z-index: 1000;
+}
+
+.mat-icon-button{
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+}
+
+.customer-table {
+  background-color: #f6f6f6;
+  overflow: auto;
+  padding: 0;
+  width: 100%;
+  border-radius: 5px;
+}
+input{
+  width: 75px;
+}
+
+.hide-progress-bar {
+  height: 4px;
+  width: 100%;
+  padding: 0;
+}
+
+/* .table-component{
+  overflow-x: auto;
+} */
+
+:host ::ng-deep .table>:not(caption)>*>* {
+    padding: 0 !important;
+}
+
+.list-result {
+  display: flex;
+  align-items: center;
+}
+
+.filter-list {
+  background: #f6f6f6;
+  padding-bottom: 2rem;
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem;
+}
+
+.clear-search-key {
+  cursor: pointer;
+}
+
+.clear-all {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-decoration-line: underline;
+  color: #f68383;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.total-result {
+  font-size: 24px;
+}
+
+.product-search {
+  padding: 0.2rem;
+  height: 26px;
+  border-radius: 5px;
+  border: 1px solid #f68383;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-right: 1rem;
+}
+
+.product_search p {
+  color: #f68383;
+  margin-bottom: 0;
+  padding: 0.5rem;
+}
+
+.mat-paginator{
+  background-color: #f6f6f6;
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+}
+
+
+.selected-row td {
+  color: #fff;
+}

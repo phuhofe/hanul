@@ -1,0 +1,93 @@
+<form [formGroup]="productForm">
+
+  <div class="dialog-title-container">
+    <h1 mat-dialog-title class="mb-0">
+      <strong class="dialog-title">{{action}} {{ pageName }} </strong>
+    </h1>
+
+    <button mat-icon-button (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div mat-dialog-content>
+
+    <mat-form-field>
+      <mat-label>SKU</mat-label>
+      <input placeholder="SKU" matInput formControlName="sku">
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input placeholder="Name" matInput formControlName="name">
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>Locality</mat-label>
+      <input placeholder="locality" matInput formControlName="locality">
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>Origin</mat-label>
+      <input placeholder="Origin" matInput formControlName="origin">
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>Meat category</mat-label>
+      <input placeholder="Meat category" matInput formControlName="meat_category">
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>Meat</mat-label>
+      <input placeholder="Meat" matInput formControlName="meat">
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>Part</mat-label>
+      <input placeholder="Part" matInput formControlName="part">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Part category</mat-label>
+      <input placeholder="Part category" matInput formControlName="part_category">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Grade</mat-label>
+      <input placeholder="Grade" matInput formControlName="grade">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Cost</mat-label>
+      <input placeholder="Cost" matInput formControlName="cost">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Price</mat-label>
+      <input placeholder="Price" matInput formControlName="price">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>App name</mat-label>
+      <input placeholder="App name" matInput formControlName="app_name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Image</mat-label>
+      <input placeholder="Image" matInput formControlName="image">
+    </mat-form-field>
+
+  </div>
+
+  <div mat-dialog-actions class="action">
+    <button mat-flat-button (click)="closeDialog()">
+      Cancel
+    </button>
+
+    <button mat-flat-button color="primary" [disabled]="productForm.invalid" (click)="doAction()">
+      {{action}}
+    </button>
+  </div>
+
+
+</form>

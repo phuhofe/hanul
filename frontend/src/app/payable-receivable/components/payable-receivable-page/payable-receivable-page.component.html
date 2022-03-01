@@ -1,0 +1,83 @@
+<app-tab-system #tabSystem [tabName]="'payable-receivable'">
+  <div main-component>
+    <div class="container-fluid my-3">
+      <app-filter-table
+        [columnData]="columnData"
+        [tableTypes]="tableTypes"
+        [clearAll]="clearAll"
+        (filter)="onFilter($event)"
+        (selectTable)="onSelectTable($event)"
+      ></app-filter-table>
+
+      <div class="table">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="list-result pt-4 ps-4">
+            <strong class="total-result m-0 me-3" *ngIf="totalProduct >= 0">
+              $ {{ totalProduct }}
+              {{ "payableReceivablePage.toPay" | transloco }}
+            </strong>
+
+            <div class="d-flex flex-wrap align-items-center">
+              <ng-container *ngIf="filterArray.length > 0">
+                <div
+                  class="product-search"
+                  *ngFor="let searchKey of filterArray; let i = index"
+                >
+                  <div class="me-2 m-0">
+                    {{ searchKey }}
+                  </div>
+                  <div
+                    class="clear-search-key d-flex"
+                    (click)="removeSearchKey(i)"
+                  >
+                    <mat-icon>clear</mat-icon>
+                  </div>
+                </div>
+                <button mat-button color="primary" (click)="onClearAll()">
+                  <u class="text-underline">
+                    {{ "common.clearAll" | transloco }}
+                  </u>
+                </button>
+              </ng-container>
+            </div>
+          </div>
+
+          <div class="add me-2">
+            <mat-icon
+              (click)="tabSystem.addTableTab()"
+              svgIcon="hn-add"
+            ></mat-icon>
+          </div>
+        </div>
+        <div
+          *ngIf="
+            selectedTable === payableReceivableType.PAYABLE || !selectedTable
+          "
+        >
+          <app-payable-table
+            (totalProduct)="onUpdateTotal($event)"
+            [filter]="filter"
+          ></app-payable-table>
+        </div>
+
+        <div *ngIf="selectedTable === payableReceivableType.RECEIVABLE">
+          <app-receivables-table></app-receivables-table>
+        </div>
+
+        <div *ngIf="selectedTable === payableReceivableType.COMPARATIVE">
+          <app-comparative-table
+            (totalProduct)="onUpdateTotal($event)"
+          ></app-comparative-table>
+        </div>
+
+        <div *ngIf="selectedTable === payableReceivableType.BANK">
+          <app-bank-table></app-bank-table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div add-component>
+    <app-add-pay-receipt></app-add-pay-receipt>
+  </div>
+</app-tab-system>

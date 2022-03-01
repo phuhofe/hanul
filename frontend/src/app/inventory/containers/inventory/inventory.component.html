@@ -1,0 +1,68 @@
+<div class="inventory container-fluid mt-4">
+  <app-filter-table
+    [columnData]="columnData"
+    [tableTypes]="tableTypes"
+    [clearAll]="clearAll"
+    (filter)="onFilter($event)"
+    (selectTable)="onSelectTable($event)"
+  ></app-filter-table>
+
+  <div class="table">
+    <form [formGroup]="searchForm">
+      <div class="list-result pt-4 ps-4">
+        <strong class="total-result m-0 me-3">
+          {{ totalProduct ?? "" }} {{ "inventoryPage.products" | transloco }}
+        </strong>
+
+        <div
+        class="d-flex flex-wrap align-items-center"
+      >
+        <ng-container *ngIf="filterArray.length > 0">
+          <div
+            class="product-search"
+            *ngFor="let searchKey of filterArray; let i = index"
+          >
+            <div class="me-2 m-0">
+              {{ searchKey }}
+            </div>
+            <div
+              class="clear-search-key d-flex"
+              (click)="removeSearchKey(i)"
+            >
+              <mat-icon>clear</mat-icon>
+            </div>
+          </div>
+          <button mat-button color="primary" (click)="onClearAll()">
+            <u class="text-underline">
+              {{ "common.clearAll" | transloco }}
+            </u>
+          </button>
+        </ng-container>
+      </div>
+      </div>
+    </form>
+
+    <ng-container [ngSwitch]="selectedTable">
+      <app-table-total
+        *ngSwitchDefault
+        (totalProduct)="onTotalProductChange($event)"
+      ></app-table-total>
+
+      <app-table-detail
+        *ngSwitchCase="TableType.DETAIL"
+        (totalProduct)="onTotalProductChange($event)"
+      >
+      </app-table-detail>
+
+      <app-table-comparative
+        *ngSwitchCase="TableType.COMPARATIVE"
+      ></app-table-comparative>
+
+      <app-table-history
+        *ngSwitchCase="TableType.HISTORY"
+        (totalProduct)="onTotalProductChange($event)"
+      >
+      </app-table-history>
+    </ng-container>
+  </div>
+</div>

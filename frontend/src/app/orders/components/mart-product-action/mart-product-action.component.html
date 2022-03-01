@@ -1,0 +1,299 @@
+<form [formGroup]="martProductForm" class="product-form p-4">
+  <div class="dialog-title-container">
+    <h1 mat-dialog-title class="mb-0">
+      <strong class="dialog-title">
+        {{ action }} {{ pageName }}
+        <span *ngIf="action === 'edit'"> </span>
+      </strong>
+    </h1>
+
+    <button mat-icon-button (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div>
+    <mat-card class="m-3">
+      <mat-card-header>
+        <mat-card-title>
+          {{ 'orderPage.editPage.common' | transloco }}
+        </mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="d-flex m-3">
+          <div>
+            <mat-form-field appearance="legacy" *ngIf="action === 'edit'">
+              <mat-label>
+                {{ 'orderPage.table.order_no' | transloco }}
+              </mat-label>
+              <input matInput formControlName="order_no" />
+            </mat-form-field>
+          </div>
+          <div class="mx-4">
+            <mat-form-field appearance="legacy" >
+              <mat-label>
+                {{ 'orderPage.table.business_no' | transloco }}
+              </mat-label>
+              <input matInput formControlName="business_no" />
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="legacy" *ngIf="action === 'edit'">
+              <mat-label>Status</mat-label>
+              <input matInput formControlName="status" />
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <ng-container formArrayName="order_units">
+      <div class="d-flex align-item-center justify-content-between m-3">
+        <h4> {{ 'orderPage.editPage.products' | transloco }} </h4>
+        <div>
+          <button mat-button (click)="expanded = true">{{ 'orderPage.expandAll' | transloco }}</button>
+          <button mat-button (click)="expanded = false">{{ 'orderPage.collapseAll' | transloco }}</button>
+        </div>
+      </div>
+
+      <mat-accordion class="example-headers-align" multi>
+        <mat-expansion-panel
+          class="expansion-panel"
+          *ngFor="let rowForm of productsForm.controls; let i = index"
+          [ngClass]="{'mat-elevation-z8 border border-warning': i === productsForm.controls.length - 1 && justAdded}"
+          [expanded]="expanded">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ rowForm.value.app_name }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          
+        
+          <div [formGroupName]="i">
+            <div class="row">
+              <div class="col-md-4">
+                <mat-form-field appearance="legacy">
+                  <mat-label> {{ 'orderPage.table.app_name' | transloco }} </mat-label>
+                  <input matInput formControlName="app_name" />
+                </mat-form-field>
+
+               <div class="d-flex">
+                  <mat-form-field appearance="legacy" class="pe-3">
+                    <mat-label> {{ 'orderPage.table.quantity' | transloco }} </mat-label>
+                    <input type="number" matInput formControlName="quantity" />
+                  </mat-form-field>
+
+                  <mat-form-field appearance="legacy">
+                    <mat-label>{{ 'orderPage.table.unit' | transloco }}</mat-label>
+                    <input matInput formControlName="unit" />
+                  </mat-form-field>
+               </div>
+
+                <mat-form-field appearance="legacy">
+                  <mat-label>{{ 'orderPage.table.type' | transloco }}</mat-label>
+                  <mat-select formControlName="type">
+                    <mat-option *ngFor="let type of allTypes" [value]="type.value">
+                      {{ type.label }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4">
+                <mat-form-field appearance="legacy">
+                  <mat-label>{{ 'orderPage.table.locality' | transloco }}</mat-label>
+                  <input matInput formControlName="locality" />
+                </mat-form-field>
+
+                <mat-form-field appearance="legacy">
+                  <mat-label>{{ 'orderPage.table.origin' | transloco }}</mat-label>
+                  <input matInput formControlName="origin" />
+                </mat-form-field>
+
+                <mat-form-field appearance="legacy">
+                  <mat-label>{{ 'orderPage.table.sku' | transloco }}</mat-label>
+                  <input matInput formControlName="sku" />
+                </mat-form-field>
+                            
+              </div>
+
+              <div class="col-md-4">
+                <mat-form-field appearance="legacy">
+                  <mat-label>{{ 'orderPage.table.serial_no' | transloco }}</mat-label>
+                  <input matInput formControlName="serial_no" />
+                </mat-form-field>
+
+                <mat-form-field appearance="legacy">
+                  <mat-label>{{ 'orderPage.table.bl_no' | transloco }}</mat-label>
+                  <input matInput formControlName="bl_no" />
+                </mat-form-field>
+
+                <mat-form-field appearance="legacy">
+                  <mat-label>{{ 'orderPage.table.price' | transloco }}</mat-label>
+                  <input  matInput formControlName="price" />
+                </mat-form-field>
+            
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <mat-form-field appearance="legacy">
+                  <mat-label>{{ 'orderPage.table.detailed_notes' | transloco }}</mat-label>
+                  <textarea  matInput formControlName="detailed_notes"></textarea> 
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-4">
+
+                <mat-form-field appearance="legacy">
+                  <mat-label>{{ 'orderPage.table.product_notes' | transloco }}</mat-label>
+                  <textarea  matInput formControlName="product_notes"></textarea> 
+                </mat-form-field> 
+
+               </div>
+            </div>
+          </div>
+
+
+          <div class="d-flex justify-content-end">
+            <button mat-flat-button color="primary" class="mx-3"(click)="resetRow(i)"
+              *ngIf="productsForm.controls[i].touched && productsForm.controls[i].dirty">
+              <mat-icon>restart_alt</mat-icon> 
+              {{ 'orderPage.editPage.reset' | transloco }}
+            </button>
+
+            <button mat-flat-button color="primary" (click)="removeRow(i)">
+              <mat-icon>delete</mat-icon> 
+              {{ 'orderPage.editPage.remove' | transloco }}
+            </button>
+        </div>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+    </ng-container>
+  </div>
+
+  <mat-card *ngIf="isAddingProduct" class="m-3">
+    <mat-card-header class="m-0">
+      <mat-card-title>
+        {{ 'orderPage.editPage.newProduct' | transloco }}
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="addProductForm">
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field appearance="legacy">
+              <mat-label> {{ 'orderPage.table.app_name' | transloco }} </mat-label>
+              <input matInput formControlName="app_name" />
+            </mat-form-field>
+
+           <div class="d-flex">
+              <mat-form-field appearance="legacy" class="pe-3">
+                <mat-label> {{ 'orderPage.table.quantity' | transloco }} </mat-label>
+                <input type="number" matInput formControlName="quantity" />
+              </mat-form-field>
+
+              <mat-form-field appearance="legacy">
+                <mat-label>{{ 'orderPage.table.unit' | transloco }}</mat-label>
+                <input matInput formControlName="unit" />
+              </mat-form-field>
+           </div>
+
+            <mat-form-field appearance="legacy">
+              <mat-label>{{ 'orderPage.table.type' | transloco }}</mat-label>
+              <mat-select formControlName="type">
+                <mat-option *ngFor="let type of allTypes" [value]="type.value">
+                  {{ "orderPage."+type.label | transloco}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-4">
+            <mat-form-field appearance="legacy">
+              <mat-label>{{ 'orderPage.table.locality' | transloco }}</mat-label>
+              <input matInput formControlName="locality" />
+            </mat-form-field>
+
+            <mat-form-field appearance="legacy">
+              <mat-label>{{ 'orderPage.table.origin' | transloco }}</mat-label>
+              <input matInput formControlName="origin" />
+            </mat-form-field>
+
+            <mat-form-field appearance="legacy">
+              <mat-label>{{ 'orderPage.table.sku' | transloco }}</mat-label>
+              <input matInput formControlName="sku" />
+            </mat-form-field>
+                        
+          </div>
+
+          <div class="col-md-4">
+            <mat-form-field appearance="legacy">
+              <mat-label>{{ 'orderPage.table.serial_no' | transloco }}</mat-label>
+              <input matInput formControlName="serial_no" />
+            </mat-form-field>
+
+            <mat-form-field appearance="legacy">
+              <mat-label>{{ 'orderPage.table.bl_no' | transloco }}</mat-label>
+              <input matInput formControlName="bl_no" />
+            </mat-form-field>
+
+            <mat-form-field appearance="legacy">
+              <mat-label>{{ 'orderPage.table.price' | transloco }}</mat-label>
+              <input matInput formControlName="price" />
+            </mat-form-field>
+        
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <mat-form-field appearance="legacy">
+              <mat-label>{{ 'orderPage.table.detailed_notes' | transloco }}</mat-label>
+              <textarea  matInput formControlName="detailed_notes"></textarea> 
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-4">
+
+            <mat-form-field appearance="legacy">
+              <mat-label>{{ 'orderPage.table.product_notes' | transloco }}</mat-label>
+              <textarea  matInput formControlName="product_notes"></textarea> 
+            </mat-form-field> 
+
+           </div>
+        </div>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <div class="d-flex justify-content-end">
+        <button  mat-flat-button color="primary"  class="mx-2" (click)="addRow(addProductForm.value)">
+          <mat-icon>add</mat-icon>{{'orderPage.add' | transloco }}
+        </button>
+        <button mat-flat-button color="accent"(click)="isAddingProduct = false">
+          <mat-icon>close</mat-icon>{{'orderPage.close' | transloco }}
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+
+  <div class="action">
+    <button mat-flat-button color="primary" class="text-capitalize mx-2" (click)="doAction()">
+      <mat-icon>save</mat-icon>{{'orderPage.saveAll' | transloco }}
+    </button>
+
+    <button mat-flat-button color="primary" class="text-capitalize mx-2" (click)="onAddProduct()">
+      <mat-icon>add</mat-icon>{{'orderPage.addProductRow' | transloco }}
+    </button>
+
+    <button mat-flat-button color="primary" class="text-capitalize mx-2" (click)="resetAll()" 
+            *ngIf="action === 'edit'">
+      <mat-icon>restart_alt</mat-icon>{{'orderPage.resetAll' | transloco }}
+    </button>
+  </div>
+</form>

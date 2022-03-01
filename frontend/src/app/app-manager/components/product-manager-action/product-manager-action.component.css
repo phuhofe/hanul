@@ -1,0 +1,105 @@
+.dialog-title-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dialog-title {
+  text-transform: capitalize;
+  font-size: 20px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.action {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.add-image {
+  cursor: pointer;
+}
+
+.add-image mat-icon {
+  color: var(--hanul-primary);
+}
+
+.unit {
+  color: var(--hanul-primary);
+  padding-left: 8px;
+}
+
+.upload-file {
+  outline: none;
+  cursor: pointer;
+}
+
+.inputfile:focus {
+  outline: none;
+  border: none;
+}
+
+.image-preview-wrapper {
+  max-width: 1064px;
+  margin: 1rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+
+.preview {
+  max-width: 250px;
+}
+
+.preview-wrapper {
+  position: relative;
+}
+
+.remove-image-button {
+  position: absolute;
+  top: 5px;
+  left: 205px;
+  line-height: 21px;
+}
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.inputfile {
+  font-size: 1.25em;
+  font-weight: 700;
+  color: white;
+  background-color: black;
+  display: inline-block;
+}
+
+.inputfile {
+  cursor: pointer;
+}
+
+.inputfile + label * {
+  pointer-events: none;
+}
+
+.progress-bar {
+  margin: 1rem 0;
+  height: 0.75rem;
+}
+
+.image-upload {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.42);
+  width: 50%;
+}
+
+.upload-file-button:hover {
+  background: var(--hanul-primary);
+  color: #fff;
+}

@@ -1,0 +1,341 @@
+<form [formGroup]="form">
+  <mat-table
+    formArrayName="order_units"
+    [dataSource]="dataSource"
+    class="order-unit-table ps-4"
+  >
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-checkbox
+          color="primary"
+          (change)="$event ? masterToggle() : null"
+          [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()"
+        >
+        </mat-checkbox>
+      </mat-header-cell>
+
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox
+          color="primary"
+          (click)="$event.stopPropagation()"
+          (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)"
+        >
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="sku">
+      <mat-header-cell *matHeaderCellDef>
+        {{ "orderPage.table.sku" | transloco }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element; let rowIndex = index">
+        <span *ngIf="!element.isEdit">
+          {{ orderUnitsForm.controls[rowIndex].value.sku | orderUnitValue }}
+        </span>
+
+        <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+          <input
+            class="cell-input"
+            (keydown.enter)="enter()"
+            formControlName="sku"
+          />
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>
+        {{ "orderPage.table.itemName" | transloco }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element; let rowIndex = index">
+        <span *ngIf="!element.isEdit">
+          {{
+            orderUnitsForm.controls[rowIndex].value.app_name | orderUnitValue
+          }}
+        </span>
+
+        <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+          <input
+            class="cell-input"
+            (keydown.enter)="enter()"
+            formControlName="app_name"
+          />
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef>
+        {{ "orderPage.table.status" | transloco }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element; let rowIndex = index">
+        <span *ngIf="!element.isEdit">
+          {{ orderUnitsForm.controls[rowIndex].value.status | orderUnitValue }}
+        </span>
+
+        <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+          <input
+            class="cell-input"
+            (keydown.enter)="enter()"
+            formControlName="status"
+          />
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="origin">
+      <mat-header-cell *matHeaderCellDef>
+        {{ "orderPage.table.origin" | transloco }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element; let rowIndex = index">
+        <span *ngIf="!element.isEdit">
+          {{
+            orderUnitsForm.controls[rowIndex].value.locality | orderUnitValue
+          }}
+        </span>
+
+        <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+          <input
+            class="cell-input"
+            (keydown.enter)="enter()"
+            formControlName="locality"
+          />
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="quantity">
+      <mat-header-cell *matHeaderCellDef>
+        {{ "orderPage.table.quantity" | transloco }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element; let rowIndex = index">
+        <span *ngIf="!element.isEdit">
+          {{
+            orderUnitsForm.controls[rowIndex].value.quantity | orderUnitValue
+          }}
+        </span>
+
+        <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+          <input
+            class="cell-input"
+            type="number"
+            (keydown.enter)="enter()"
+            formControlName="quantity"
+          />
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="pricePerUnit">
+      <mat-header-cell *matHeaderCellDef>
+        {{ "orderPage.table.price" | transloco }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element; let rowIndex = index">
+        <span *ngIf="!element.isEdit">
+          {{ orderUnitsForm.controls[rowIndex].value.price | orderUnitValue }}
+        </span>
+
+        <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+          <input
+            type="number"
+            class="cell-input"
+            (keydown.enter)="enter()"
+            formControlName="price"
+          />
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="totalPrice">
+      <mat-header-cell *matHeaderCellDef>
+        {{ "orderPage.table.totalPrice" | transloco }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element; let rowIndex = index">
+        <span *ngIf="!element.isEdit">
+          {{
+            orderUnitsForm.controls[rowIndex].value.price *
+              orderUnitsForm.controls[rowIndex].value.quantity
+          }}
+        </span>
+
+        <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+          {{
+            orderUnitsForm.controls[rowIndex].value.price *
+              orderUnitsForm.controls[rowIndex].value.quantity
+          }}
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="serialNumber">
+      <mat-header-cell *matHeaderCellDef>
+        {{ "orderPage.table.serialNumber" | transloco }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element; let rowIndex = index">
+        <span *ngIf="!element.isEdit">
+          {{ element.serial_no | orderUnitValue }}
+        </span>
+
+        <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+          <input
+            class="cell-input"
+            (keydown.enter)="enter()"
+            formControlName="serial_no"
+          />
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="blNumber">
+      <mat-header-cell *matHeaderCellDef>
+        {{ "orderPage.table.BLNumber" | transloco }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element; let rowIndex = index">
+        <span *ngIf="!element.isEdit">
+          {{ element.bl_no | orderUnitValue }}
+        </span>
+
+        <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+          <input
+            class="cell-input"
+            (keydown.enter)="enter()"
+            formControlName="bl_no"
+          />
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="product_notes">
+      <mat-header-cell *matHeaderCellDef>
+        {{ "orderPage.table.product_notes" | transloco }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element; let rowIndex = index">
+        <span *ngIf="!element.isEdit">
+          {{ orderUnitsForm.controls[rowIndex].value.product_notes }}
+        </span>
+
+        <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+          <input
+            class="cell-input"
+            (keydown.enter)="enter()"
+            formControlName="product_notes"
+          />
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="detailed_notes">
+      <mat-header-cell *matHeaderCellDef>
+        {{ "orderPage.table.detailed_notes" | transloco }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element; let rowIndex = index">
+        <span *ngIf="!element.isEdit">
+          {{ orderUnitsForm.controls[rowIndex].value.detailed_notes }}
+        </span>
+
+        <div *ngIf="element.isEdit" [formGroupName]="rowIndex">
+          <input
+            class="cell-input"
+            (keydown.enter)="enter()"
+            formControlName="detailed_notes"
+          />
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+      <mat-header-cell *matHeaderCellDef>
+        {{ "orderPage.table.type" | transloco }}
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element; let rowIndex = index">
+        <mat-icon
+          *ngIf="element.type === ProductType.BUTCHER"
+          matTooltip="butcher"
+          class="icon butcher-icon"
+          >food_bank</mat-icon
+        >
+        <mat-icon
+          *ngIf="element.type === ProductType.RESTAURANT"
+          class="icon restaurant-icon"
+          matTooltip="restaurant"
+          >storefront</mat-icon
+        >
+        <mat-icon
+          color="primary"
+          class="icon"
+          *ngIf="element.type === ProductType.MART"
+          matTooltip="mart"
+          >store</mat-icon
+        >
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <mat-icon
+          *ngIf="!element.isEdit"
+          class="edit-row-icon"
+          matTooltip="{{ 'orderPage.table.editInline' | transloco }}"
+          (click)="$event.stopPropagation(); element.isEdit = true"
+        >
+          drive_file_rename_outline
+        </mat-icon>
+
+        <mat-icon
+          *ngIf="element.isEdit"
+          class="edit-row-icon"
+          (click)="
+            $event.stopPropagation(); element.isEdit = false; onSaveRow()
+          "
+        >
+          save
+        </mat-icon>
+
+        <button
+          *ngIf="element.type === 'mart'"
+          color="primary"
+          (click)="
+            $event.stopPropagation();
+            onUpdateStatus(element, i, 'complete_order')
+          "
+          mat-icon-button
+          matTooltip="{{ 'orderPage.table.complete_order' | transloco }}"
+        >
+          <mat-icon>published_with_changes</mat-icon>
+        </button>
+
+        <button
+          *ngIf="element.type === 'mart'"
+          color="primary"
+          (click)="
+            $event.stopPropagation();
+            onUpdateStatus(element, i, 'future_release')
+          "
+          mat-icon-button
+          matTooltip="{{ 'orderPage.table.future_release' | transloco }}"
+        >
+          <mat-icon>pivot_table_chart</mat-icon>
+        </button>
+
+        <button
+          *ngIf="element.status === StatusString.NEW"
+          color="primary"
+          (click)="$event.stopPropagation(); onUpdateStatus(element, i, 'new')"
+          mat-icon-button
+          matTooltip="{{ 'orderPage.table.today' | transloco }}"
+        >
+          <mat-icon>today</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: columnsToDisplay"
+      (click)="selection.toggle(row)"
+    ></mat-row>
+  </mat-table>
+</form>
